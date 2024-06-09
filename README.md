@@ -1,2 +1,2 @@
 ## Link to my Portfolio Website
-[Portfolio Website](doc:hhprojects.github.io/portfolio)
+[Portfolio Website](www.hhprojects.github.io/portfolio)
