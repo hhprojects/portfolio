@@ -5,7 +5,7 @@
     --primaryff: "Abyssinica SIL";
     --secondaryff: "Baloo Paaji 2";
     --textff: "Inter";
-    --h1: bold 96px var(--secondaryff);
+    --h1: bold max(96px, 4vw) var(--secondaryff);
     --h2: 32px var(--primaryff);
 }
 
@@ -19,6 +19,15 @@ body{
 
 .section{
     scroll-snap-align: start;
+    scroll-snap-stop: always;
+    height: 100vh;
+}
+
+h1{
+    font:var(--h1);
+    font-weight: 700;
+    color: var(--colorsecondary);
+    letter-spacing: 40px;
 }
 
 /* Navigation Bar Styles */
@@ -57,6 +66,7 @@ body{
     margin-top: 120px;
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
 
     /* Animation */
@@ -72,14 +82,21 @@ body{
         opacity: 1;
     }
 }
-.home h1{
-    font:var(--h1);
-    font-weight: 700;
-    color: var(--colorsecondary);
-    letter-spacing: 40px;
+
+
+/* About Styles */
+.about{
     display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 200px;
 }
 
-.home img{
-    display: flex;
+.about div{
+    max-width: 50%;
+    padding: 0 100px;
+}
+
+.about div img{
+    max-width: 100%;
 }
