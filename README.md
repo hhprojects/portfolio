@@ -39,16 +39,6 @@ npm install
 npm run dev
 ```
 
-4. Build for production
-```bash
-npm run build
-```
-
-5. Preview production build
-```bash
-npm run preview
-```
-
 ## 🎯 Sections
 
 - **Hero**: Animated introduction with rotating roles
@@ -89,6 +79,3 @@ src/
 
 **Han Hua**
 - GitHub: [@hhprojects](https://github.com/hhprojects)
-- LinkedIn: [Lee Han Hua](https://www.linkedin.com/in/lee-han-hua/)
-- Instagram: [@im_hh_](https://www.instagram.com/im_hh_/)
-- Email: lhanhua01@gmail.com
