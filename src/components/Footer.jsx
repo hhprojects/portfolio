@@ -39,10 +39,7 @@ function Footer() {
         {/* Copyright */}
         <div className="footer-left">
           <p className="copyright">
-            © {currentYear} <span className="name">Han Hua</span>. All rights reserved.
-          </p>
-          <p className="built-with">
-            Built with <span className="heart">❤️</span> using React
+            © {currentYear} <span className="name">hh.dev</span>. All rights reserved.
           </p>
         </div>
 
