@@ -1,0 +1,232 @@
+/* Contact section */
+.contact {
+  min-height: 100vh;
+  padding: 120px 2rem 100px;
+  background: #1a1a1a;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+
+.contact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(118, 75, 162, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contact-container {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Section header */
+.contact-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-in .contact-header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-number {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #667eea;
+  letter-spacing: 2px;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+.contact-heading {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+
+.contact-subtitle {
+  color: #b0b0b0;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 4rem;
+  font-weight: 300;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+}
+
+.animate-in .contact-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Social links */
+.social-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.social-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+}
+
+.social-link:nth-child(1) {
+  transition-delay: 0.3s;
+}
+
+.social-link:nth-child(2) {
+  transition-delay: 0.4s;
+}
+
+.social-link:nth-child(3) {
+  transition-delay: 0.5s;
+}
+
+.social-link:nth-child(4) {
+  transition-delay: 0.6s;
+}
+
+.animate-in .social-link {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.social-link:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-4px);
+}
+
+.social-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888888;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover .social-icon {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.social-name {
+  font-size: 0.9rem;
+  color: #888888;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.social-link:hover .social-name {
+  color: #ffffff;
+}
+
+/* Contact information */
+.location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #888888;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.7s;
+}
+
+.animate-in .location {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.location-icon {
+  font-size: 1.1rem;
+}
+
+.location-text {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .contact {
+    padding: 100px 1.5rem 80px;
+  }
+
+  .contact-heading {
+    font-size: 2.5rem;
+  }
+
+  .contact-subtitle {
+    font-size: 1rem;
+  }
+
+  .social-links {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .social-link {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-heading {
+    font-size: 2rem;
+  }
+
+  .social-links {
+    grid-template-columns: 1fr;
+  }
+
+  .social-link {
+    padding: 1.25rem;
+  }
+}
