@@ -1,15 +1,19 @@
 import { useState, useEffect, useRef } from 'react'
 import './About.css'
+import ordImage from '../assets/ord.jpg'
+import shangriLaImage from '../assets/shangri-la.jpg'
+import dogCafeImage from '../assets/dog-cafe.jpg'
+import snowMountainImage from '../assets/snow-mountain.jpg'
 
 function About() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const sectionRef = useRef(null)
 
   const carouselImages = [
-    'src/assets/ord.jpg',
-    'src/assets/shangri-la.jpg',
-    'src/assets/dog-cafe.jpg',
-    'src/assets/snow-mountain.jpg',
+    ordImage,
+    shangriLaImage,
+    dogCafeImage,
+    snowMountainImage,
   ]
 
   // Auto-advance carousel every 5 seconds

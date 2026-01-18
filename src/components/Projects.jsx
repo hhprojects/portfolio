@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import './Projects.css'
+import portfolioImage from '../assets/portfolio.jpg'
 
 function Projects() {
   const [currentProject, setCurrentProject] = useState(null)
@@ -12,7 +13,7 @@ function Projects() {
       year: '2026',
       description: 'Personal portfolio website showcasing projects and skills. Features smooth animations, responsive design, and dark mode.',
       tech: ['React', 'CSS'],
-      image: 'src/assets/portfolio.jpg',
+      image: portfolioImage,
       link: 'https://github.com/hhprojects/portfolio',
       demo: 'https://demo.com',
     },
