@@ -15,7 +15,16 @@ function Projects() {
       tech: ['React', 'CSS'],
       image: portfolioImage,
       link: 'https://github.com/hhprojects/portfolio',
-      demo: 'https://demo.com',
+      demo: 'hhproject.github.io/portfolio',
+    },
+    {
+      id: 2,
+      title: 'Workflow Dashboard',
+      year: '2026',
+      description: 'A full-stack dashboard application for workflow management. Features containerized backend and frontend services with Docker support.',
+      tech: ['TypeScript', 'CSS', 'Docker'],
+      image: portfolioImage,
+      link: 'https://github.com/hhprojects/workflow-dashboard',
     },
   ]
 
@@ -25,7 +34,7 @@ function Projects() {
     }
   }, [])
 
-  const handleProjectHover = (project) => {
+  const handleProjectSelect = (project) => {
     setCurrentProject(project)
   }
 
@@ -100,7 +109,8 @@ function Projects() {
             <div
               key={project.id}
               className={`timeline-item ${currentProject?.id === project.id ? 'active' : ''}`}
-              onMouseEnter={() => handleProjectHover(project)}
+              onClick={() => handleProjectSelect(project)}
+              onMouseEnter={() => handleProjectSelect(project)}
               style={{ '--item-index': index }}
             >
               <div className="timeline-dot"></div>
