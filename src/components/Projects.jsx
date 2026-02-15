@@ -7,6 +7,10 @@ import dark_board from '../assets/projects/muse/dark_board.jpg'
 import dark_calendar from '../assets/projects/muse/dark_calendar.jpg'
 import light_board from '../assets/projects/muse/light_board.jpg'
 import light_calendar from '../assets/projects/muse/light_calendar.jpg'
+import library from '../assets/projects/youtube_music_streamer/library.jpg'
+import player from '../assets/projects/youtube_music_streamer/player.jpg'
+import search from '../assets/projects/youtube_music_streamer/search.jpg'
+import youtubeMusicStreamerVideo from '../assets/projects/youtube_music_streamer/youtube_music_streamer.mp4'
 
 function Projects() {
   const [currentProject, setCurrentProject] = useState(null)
@@ -17,8 +21,8 @@ function Projects() {
     {
       id: 1,
       title: 'Portfolio Website',
-      year: '2026',
-      description: 'Personal portfolio website showcasing projects and skills. Features smooth animations, responsive design, and dark mode.',
+      year: '2025',
+      description: `Personal portfolio website showcasing projects and skills. Features smooth animations, responsive design, and dark mode.`,
       tech: ['React', 'CSS'],
       images: [portfolioImage],
       link: 'https://github.com/hhprojects/portfolio',
@@ -28,10 +32,21 @@ function Projects() {
       id: 2,
       title: 'Muse - Workflow Dashboard',
       year: '2026',
-      description: 'A full-stack dashboard application for workflow management. Features containerized backend and frontend services with Docker support.',
+      description: `A full-stack dashboard application for workflow management. Features containerized backend and frontend services with 
+                    Docker support.`,
       tech: ['TypeScript', 'CSS', 'Docker'],
       images: [create_event, create_task, dark_board, dark_calendar, light_board, light_calendar],
       link: 'https://github.com/hhprojects/workflow-dashboard',
+    },
+    {
+      id: 3,
+      title: 'Youtube Music Streamer',
+      year: '2026',
+      description: `A cross-platform mobile app that lets users search YouTube, download audio (m4a), and manage a personal music library 
+                    with a full-featured in-app player. The app talks to a self-hosted Node backend that uses yt-dlp for search and extraction, 
+                    designed to run with the backend on a home server (e.g. Raspberry Pi) and supports remote access (e.g. via Tailscale).`,
+      tech: ['React Native', 'Node.js', 'Raspberry Pi', 'Tailscale'],
+      images: [library, player, search, youtubeMusicStreamerVideo],
     },
   ]
 
@@ -46,14 +61,7 @@ function Projects() {
     setCurrentSlide(0)
   }
 
-  // Auto-advance carousel every 5 seconds
-  useEffect(() => {
-    if (!currentProject?.images?.length) return
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % currentProject.images.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [currentProject?.id, currentProject?.images?.length])
+  const isVideo = (src) => /\.(mp4|webm|ogg|mov)$/i.test(src)
 
   const goToSlide = (index) => setCurrentSlide(index)
   const nextSlide = () => {
@@ -107,9 +115,19 @@ function Projects() {
                     className="carousel-track"
                     style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                   >
-                    {currentProject.images.map((image, index) => (
+                    {currentProject.images.map((media, index) => (
                       <div key={index} className="carousel-slide">
-                        <img src={image} alt={`${currentProject.title} ${index + 1}`} />
+                        {isVideo(media) ? (
+                          <video
+                            src={media}
+                            controls
+                            muted
+                            playsInline
+                            preload="metadata"
+                          />
+                        ) : (
+                          <img src={media} alt={`${currentProject.title} ${index + 1}`} />
+                        )}
                       </div>
                     ))}
                   </div>
