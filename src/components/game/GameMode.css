@@ -1,3 +1,4 @@
+/* ── GameMode container ────────────────────────────────────────────── */
 .game-mode-root {
   position: fixed;
   inset: 0;
@@ -6,4 +7,119 @@
   height: 100vh;
   overflow: hidden;
   background: #000;
+}
+
+.game-mode-root canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* ── Pixelate transition overlay ──────────────────────────────────── */
+.pixelate-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  background: transparent;
+  transition: opacity 200ms ease;
+}
+
+.game-mode-root.entering .pixelate-overlay {
+  animation: pixelate-in 800ms ease forwards;
+}
+
+.game-mode-root.exiting .pixelate-overlay {
+  animation: pixelate-out 800ms ease forwards;
+}
+
+@keyframes pixelate-in {
+  0%   { filter: blur(0px) brightness(1); opacity: 1; }
+  30%  { filter: blur(2px) brightness(1.4); opacity: 1; }
+  60%  { filter: blur(4px) brightness(0.8); opacity: 0.8; }
+  100% { filter: blur(0px) brightness(1); opacity: 0; }
+}
+
+@keyframes pixelate-out {
+  0%   { filter: blur(0px) brightness(1); opacity: 0; }
+  40%  { filter: blur(4px) brightness(0.8); opacity: 0.8; }
+  70%  { filter: blur(2px) brightness(1.4); opacity: 1; }
+  100% { filter: blur(0px) brightness(1); opacity: 1; }
+}
+
+.game-mode-root.entering canvas {
+  animation: canvas-pixelate-in 800ms ease forwards;
+}
+
+.game-mode-root.exiting canvas {
+  animation: canvas-pixelate-out 800ms ease forwards;
+}
+
+@keyframes canvas-pixelate-in {
+  0%   { filter: blur(16px) brightness(2); opacity: 0; transform: scale(1.04); }
+  40%  { filter: blur(8px) brightness(1.5); opacity: 0.6; transform: scale(1.02); }
+  70%  { filter: blur(2px) brightness(1.1); opacity: 0.9; transform: scale(1.01); }
+  100% { filter: blur(0px) brightness(1); opacity: 1; transform: scale(1); }
+}
+
+@keyframes canvas-pixelate-out {
+  0%   { filter: blur(0px) brightness(1); opacity: 1; transform: scale(1); }
+  30%  { filter: blur(2px) brightness(1.1); opacity: 0.9; transform: scale(1.01); }
+  60%  { filter: blur(8px) brightness(1.5); opacity: 0.6; transform: scale(1.02); }
+  100% { filter: blur(16px) brightness(2); opacity: 0; transform: scale(1.04); }
+}
+
+/* ── Exit button ──────────────────────────────────────────────────── */
+.game-exit-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+.game-exit-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Room label (top-left HUD) ─────────────────────────────────────── */
+.game-room-label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 20;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+}
+
+/* ── Controls hint (bottom-left HUD) ─────────────────────────────── */
+.game-controls-hint {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 20;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  pointer-events: none;
 }
