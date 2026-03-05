@@ -123,3 +123,161 @@
   letter-spacing: 1px;
   pointer-events: none;
 }
+
+/* ── HTML overlay layer ────────────────────────────────────────────── */
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 6rem;
+}
+
+.interact-prompt {
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: #fff;
+  animation: prompt-bob 1s ease-in-out infinite;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}
+
+.interact-key {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
+  padding: 0 4px;
+  font-weight: bold;
+  color: #FFE600;
+}
+
+@keyframes prompt-bob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+.popup-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+  animation: backdrop-in 0.2s ease;
+}
+
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.popup-card {
+  background: rgba(15, 15, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 520px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  animation: card-slide-up 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes card-slide-up {
+  from { transform: translateY(40px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.popup-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #aaa;
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+.popup-close:hover { background: rgba(255, 80, 80, 0.3); color: #fff; }
+
+.popup-body { color: #e0e0e0; }
+
+.popup-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 1rem 2.5rem 0;
+}
+
+.popup-section { margin-bottom: 1.25rem; line-height: 1.7; }
+.popup-section p { margin: 0 0 0.75rem; }
+.popup-subtitle { font-size: 0.8rem; color: #9ca3af; letter-spacing: 0.05em; text-transform: uppercase; margin: 1rem 0 0.5rem; }
+
+.popup-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+.popup-tag {
+  background: rgba(0, 180, 216, 0.15);
+  color: #00b4d8;
+  border: 1px solid rgba(0, 180, 216, 0.3);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+}
+.popup-tag.tag-secondary { background: rgba(126, 34, 206, 0.15); color: #a78bfa; border-color: rgba(126, 34, 206, 0.3); }
+.popup-tag.tag-accent { background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3); }
+
+.popup-big-text { font-size: 1.1rem; font-weight: 600; color: #f3f4f6; }
+.popup-project-color { height: 4px; border-radius: 2px; margin-bottom: 1rem; }
+
+.popup-links { margin-top: 1.25rem; }
+.popup-link-btn {
+  display: inline-block;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+.popup-link-btn:hover { background: rgba(255,255,255,0.15); }
+
+.popup-form { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
+.popup-input, .popup-textarea {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+.popup-input:focus, .popup-textarea:focus { border-color: #00b4d8; }
+.popup-input::placeholder, .popup-textarea::placeholder { color: #6b7280; }
+.popup-submit {
+  background: linear-gradient(135deg, #00b4d8, #7e22ce);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.popup-submit:hover { opacity: 0.9; }
