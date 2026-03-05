@@ -1,0 +1,129 @@
+.blog {
+  padding: 6rem 2rem;
+  background: #111827;
+  min-height: 60vh;
+}
+
+.blog-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.blog-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.blog-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 0.75rem 0;
+}
+
+.blog-subtitle {
+  color: #9ca3af;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.blog-title-accent {
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #00b4d8, #7e22ce);
+  margin: 1rem auto 0;
+  border-radius: 2px;
+}
+
+.blog-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #6b7280;
+}
+
+.blog-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.blog-empty p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.75rem;
+}
+
+.blog-card {
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 12px;
+  padding: 1.75rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-3px);
+  border-color: #00b4d8;
+  box-shadow: 0 8px 30px rgba(0, 180, 216, 0.1);
+}
+
+.blog-card-date {
+  font-size: 0.8rem;
+  color: #6b7280;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.75rem 0;
+  text-transform: uppercase;
+}
+
+.blog-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f3f4f6;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.4;
+}
+
+.blog-card-summary {
+  font-size: 0.95rem;
+  color: #9ca3af;
+  line-height: 1.6;
+  margin: 0 0 1.25rem 0;
+}
+
+.blog-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.blog-tag {
+  background: rgba(0, 180, 216, 0.1);
+  color: #00b4d8;
+  border: 1px solid rgba(0, 180, 216, 0.2);
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.blog-card-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #00b4d8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .blog-title { font-size: 2rem; }
+  .blog-grid { grid-template-columns: 1fr; }
+}
