@@ -77,7 +77,8 @@ export default function GameMode({ onExit }) {
     const player = playerRef.current
     const targetX = player.x - canvas.width  / 2
     const targetY = player.y - canvas.height / 2
-    const lerp = 1 - Math.pow(0.01, dt)
+    const CAM_SPEED = 0.12
+    const lerp = 1 - Math.pow(1 - CAM_SPEED, dt * 60)
     cam.x += (targetX - cam.x) * lerp
     cam.y += (targetY - cam.y) * lerp
     cam.x = Math.max(0, Math.min(cam.x, WORLD_WIDTH  - canvas.width))
