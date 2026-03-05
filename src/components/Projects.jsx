@@ -11,6 +11,10 @@ import library from '../assets/projects/youtube_music_streamer/library.jpg'
 import player from '../assets/projects/youtube_music_streamer/player.jpg'
 import search from '../assets/projects/youtube_music_streamer/search.jpg'
 import youtubeMusicStreamerVideo from '../assets/projects/youtube_music_streamer/youtube_music_streamer.mp4'
+import xuanAiTeam from '../assets/projects/xuan-dashboard/ai_team.jpg'
+import xuanHome from '../assets/projects/xuan-dashboard/home.jpg'
+import xuanReadingList from '../assets/projects/xuan-dashboard/reading_list.jpg'
+import xuanKbAnalytics from '../assets/projects/xuan-dashboard/kb_analytics.jpg'
 
 function Projects() {
   const [currentProject, setCurrentProject] = useState(null)
@@ -40,6 +44,14 @@ function Projects() {
     },
     {
       id: 3,
+      title: 'Openclaw Dashboard',
+      year: '2026',
+      description: `A personal AI dashboard built on a Raspberry Pi. Features a live activity feed tracking AI agent sessions, pixel-art AI team visualization with real-time status, kanban task board, calendar with cron job integration, reading list with knowledge base ingestion, and KB analytics. Powered by a FastAPI backend and Next.js frontend.`,
+      tech: ['Next.js', 'FastAPI', 'Python', 'SQLite', 'Raspberry Pi'],
+      images: [xuanAiTeam, xuanHome, xuanReadingList, xuanKbAnalytics],
+    },
+    {
+      id: 4,
       title: 'Youtube Music Streamer',
       year: '2026',
       description: `A cross-platform mobile app that lets users search YouTube, download audio (m4a), and manage a personal music library 
@@ -174,9 +186,11 @@ function Projects() {
                   ))}
                 </div>
                 <div className="preview-links">
-                  <a href={currentProject.link} target="_blank" rel="noopener noreferrer" className="preview-link">
-                    View Code
-                  </a>
+                  {currentProject.link && (
+                    <a href={currentProject.link} target="_blank" rel="noopener noreferrer" className="preview-link">
+                      View Code
+                    </a>
+                  )}
                   {currentProject.demo && (
                     <a href={currentProject.demo} target="_blank" rel="noopener noreferrer" className="preview-link primary">
                       Live Demo
