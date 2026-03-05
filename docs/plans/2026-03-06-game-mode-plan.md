@@ -1915,3 +1915,152 @@ Append to `src/components/game/GameMode.css`:
   font-size: 1.4rem;
   font-weight: 700;
   color: #fff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 1rem;
+}
+```
+
+**Commit:**
+```bash
+git add src/components/game/GameOverlay.jsx src/components/game/GameOverlay.css
+git commit -m "feat: add GameOverlay interact prompts and popup cards"
+```
+
+---
+
+### Task 12: Wire it all together + build check
+
+**Files:**
+- Modify: `src/App.jsx`
+- Modify: `src/components/Hero.jsx`
+
+**Step 1:** Import GameMode in App.jsx and add gameMode state:
+
+```jsx
+import { useState, useEffect } from 'react'
+import './App.css'
+import LoadingScreen from './components/LoadingScreen'
+import GameMode from './components/game/GameMode'
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import About from './components/About'
+import Skills from './components/Skills'
+import Blog from './components/Blog'
+import Projects from './components/Projects'
+import Contact from './components/Contact'
+import Footer from './components/Footer'
+
+function App() {
+  const [loaded, setLoaded] = useState(false)
+  const [gameMode, setGameMode] = useState(false)
+
+  useEffect(() => {
+    if (document.readyState === 'complete') {
+      const t = setTimeout(() => setLoaded(true), 600)
+      return () => clearTimeout(t)
+    }
+    const onLoad = () => setTimeout(() => setLoaded(true), 600)
+    window.addEventListener('load', onLoad)
+    return () => window.removeEventListener('load', onLoad)
+  }, [])
+
+  return (
+    <>
+      <LoadingScreen loaded={loaded} />
+      {gameMode && <GameMode onExit={() => setGameMode(false)} />}
+      <Navbar />
+      <Hero onPlayGame={() => setGameMode(true)} />
+      <About />
+      <Skills />
+      <Blog />
+      <Projects />
+      <Contact />
+      <Footer />
+    </>
+  )
+}
+
+export default App
+```
+
+**Step 2:** Add `onPlayGame` prop to Hero.jsx — add Play button alongside existing CTAs:
+
+```jsx
+// Hero.jsx — add prop and button
+function Hero({ onPlayGame }) {
+  // ... existing code ...
+  // Inside hero-cta div, after Resume button:
+  // Only show on desktop (hidden on mobile via CSS)
+}
+```
+
+Add to hero-cta:
+```jsx
+<button
+  className="cta-button play-game"
+  onClick={onPlayGame}
+>
+  🎮 Play
+</button>
+```
+
+Add to Hero.css:
+```css
+.cta-button.play-game {
+  background: linear-gradient(135deg, #7e22ce, #00b4d8);
+  color: #fff;
+  border: none;
+}
+
+.cta-button.play-game:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Hide game mode on mobile */
+@media (max-width: 768px) {
+  .cta-button.play-game { display: none; }
+}
+```
+
+**Step 3:** Production build check:
+```bash
+cd /home/hh-pi/projects/portfolio/.worktrees/feat-game-mode
+npm run build 2>&1 | tail -10
+```
+
+Expected: `✓ built in Xs` with no errors.
+
+**Step 4:** Final commit:
+```bash
+git add src/App.jsx src/components/Hero.jsx src/components/Hero.css
+git commit -m "feat: wire game mode into App and Hero with Play button"
+```
+
+**Step 5:** Push branch and open PR:
+```bash
+gh auth setup-git
+git push -u origin feat/game-mode
+gh pr create --title "feat: 2.5D game mode" --body "Adds interactive RPG game mode to portfolio. 🎮" --base master
+```
+
+---
+
+## Commit Order Recap
+
+```
+feat: game mode toggle state + Play button (hidden mobile)
+feat: pixelate transition animation enter/exit
+feat: GameMode.jsx shell with canvas, keyboard listener, ESC exit
+feat: useGameLoop hook with requestAnimationFrame + delta time
+feat: Han pixel art sprite (4-directional, walk + idle)
+feat: 4-room world data (Living Room, Workshop, Gallery, Contact)
+feat: canvas renderer with room backgrounds and Y-sorted objects
+feat: WASD movement with AABB collision detection
+feat: camera system with lerp follow and boundary clamping
+feat: Y-sorting and translucency (40% alpha behind objects)
+feat: GameOverlay interact prompts and popup cards
+feat: wire game mode into App and Hero with Play button
+```
