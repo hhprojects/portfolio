@@ -103,6 +103,13 @@ function Hero() {
             >
               Get In Touch
             </button>
+            <a
+              className="cta-button ghost"
+              href="/portfolio/resume.pdf"
+              download="Han_Hua_Resume.pdf"
+            >
+              📄 Resume
+            </a>
           </div>
         </div>
       </div>
