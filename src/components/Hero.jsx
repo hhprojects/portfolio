@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import './Hero.css'
 import portfolioImage from '../assets/Portfolio Image (With Lighting).png'
 
-function Hero() {
+function Hero({ onPlay }) {
   const [isVisible, setIsVisible] = useState(false)
   const [currentRole, setCurrentRole] = useState(0)
   const heroRef = useRef(null)
@@ -102,6 +102,9 @@ function Hero() {
               onClick={() => scrollToSection('contact')}
             >
               Get In Touch
+            </button>
+            <button className="cta-button play-btn" onClick={onPlay}>
+              🎮 Play
             </button>
           </div>
         </div>

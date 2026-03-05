@@ -440,3 +440,17 @@
     bottom: 1rem;
   }
 }
+
+/* Play button */
+.cta-button.play-btn {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+}
+.cta-button.play-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(240, 147, 251, 0.6);
+}
+@media (max-width: 768px) {
+  .cta-button.play-btn { display: none; }
+}
