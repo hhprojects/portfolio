@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import './GameMode.css'
 import { useGameLoop } from './useGameLoop'
-import { ROOMS } from './rooms'
+import { ROOMS, ROOM_W, ROOM_H, WORLD_W, WORLD_H } from './rooms'
 import { drawFrame } from './renderer'
 import { createPlayerState, updatePlayer } from './physics'
 import GameOverlay from './GameOverlay'
 
-const WORLD_WIDTH  = 3200
-const WORLD_HEIGHT = 600
 
 export default function GameMode({ onExit }) {
   const canvasRef   = useRef(null)
@@ -66,11 +64,11 @@ export default function GameMode({ onExit }) {
     const resize = () => {
       const canvas = canvasRef.current
       if (!canvas) return
-      // Scale canvas logical size so the 600px-tall world fills the viewport height.
-      // CSS stretches the canvas to 100% width/height (image-rendering: pixelated).
-      const scale = window.innerHeight / WORLD_HEIGHT
-      canvas.width  = Math.round(window.innerWidth / scale)
-      canvas.height = WORLD_HEIGHT
+      // Scale so world width always fills viewport width exactly.
+      // canvas.height is computed to maintain that scale for the viewport height.
+      const scale = window.innerWidth / WORLD_W
+      canvas.width  = WORLD_W
+      canvas.height = Math.round(window.innerHeight / scale)
     }
     resize()
     window.addEventListener('resize', resize)
@@ -83,21 +81,23 @@ export default function GameMode({ onExit }) {
     if (!canvas) return
     const ctx = canvas.getContext('2d')
 
-    updatePlayer(playerRef.current, keysRef.current, ROOMS, dt, WORLD_WIDTH, WORLD_HEIGHT)
+    updatePlayer(playerRef.current, keysRef.current, ROOMS, dt, WORLD_W, WORLD_H)
 
     const cam    = cameraRef.current
     const player = playerRef.current
-    const targetX = player.x - canvas.width  / 2
-    const targetY = player.y - canvas.height / 2
     const CAM_SPEED = 0.12
     const lerp = 1 - Math.pow(1 - CAM_SPEED, dt * 60)
-    cam.x += (targetX - cam.x) * lerp
-    cam.y += (targetY - cam.y) * lerp
-    cam.x = Math.max(0, Math.min(cam.x, WORLD_WIDTH  - canvas.width))
-    cam.y = Math.max(0, Math.min(cam.y, WORLD_HEIGHT - canvas.height))
 
-    const roomIdx = Math.floor(player.x / 800)
-    const room = ROOMS[Math.min(roomIdx, ROOMS.length - 1)]
+    // Camera: X is fixed at 0 (world width = canvas width, both columns always visible).
+    // Y follows the player with a soft lerp.
+    const targetY = player.y - canvas.height / 2
+    cam.x = 0
+    cam.y += (targetY - cam.y) * lerp
+    cam.y = Math.max(0, Math.min(cam.y, WORLD_H - canvas.height))
+
+    const col  = player.x >= ROOM_W ? 1 : 0
+    const row  = player.y >= ROOM_H ? 1 : 0
+    const room = ROOMS.find(r => r.col === col && r.row === row)
     if (room && room.name !== currentRoomName) setCurrentRoomName(room.name)
 
     let nearZone = null
