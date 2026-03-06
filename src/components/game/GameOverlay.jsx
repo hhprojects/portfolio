@@ -49,7 +49,7 @@ function PopupContent({ action }) {
           <h2 className="popup-title">🎲 Fun Fact</h2>
           <div className="popup-section">
             <p className="popup-big-text">I built this portfolio game mode from scratch — pixel art and all. 🎮</p>
-            <p>WASD to move, W to interact, ESC to return to the normal portfolio.</p>
+            <p>WASD to move, E to interact, ESC to return to the normal portfolio.</p>
           </div>
         </div>
       )

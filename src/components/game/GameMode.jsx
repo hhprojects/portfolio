@@ -102,7 +102,8 @@ export default function GameMode({ onExit }) {
       }
     }
 
-    if (nearZone && (keysRef.current['w'] || keysRef.current['W'] || keysRef.current['ArrowUp'])) {
+    // Use E as interact key to avoid conflict with W (walk up)
+    if (nearZone && (keysRef.current['e'] || keysRef.current['E'])) {
       if (!keysRef.current.__interactFired) {
         keysRef.current.__interactFired = true
         setOverlayState(s => ({ ...s, popup: nearZone.action }))
@@ -111,7 +112,7 @@ export default function GameMode({ onExit }) {
       keysRef.current.__interactFired = false
     }
 
-    setOverlayState(s => ({ ...s, interactLabel: nearZone ? `[W] ${nearZone.label}` : null }))
+    setOverlayState(s => ({ ...s, interactLabel: nearZone ? `[E] ${nearZone.label}` : null }))
 
     drawFrame(ctx, canvas, playerRef.current, cameraRef.current, ROOMS)
   })
@@ -123,7 +124,7 @@ export default function GameMode({ onExit }) {
       <canvas ref={canvasRef} />
       <div className="pixelate-overlay" />
       <div className="game-room-label">{currentRoomName}</div>
-      <div className="game-controls-hint">WASD / ↑↓←→ Move &nbsp;|&nbsp; W Interact &nbsp;|&nbsp; ESC Exit</div>
+      <div className="game-controls-hint">WASD / ↑↓←→ Move &nbsp;|&nbsp; E Interact &nbsp;|&nbsp; ESC Exit</div>
       <button className="game-exit-btn" onClick={triggerExit}>✕ ESC</button>
       <GameOverlay
         overlayState={overlayState}
