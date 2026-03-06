@@ -102,6 +102,9 @@ export default function GameMode({ onExit }) {
       }
     }
 
+    // Update nearInteract so the ! exclamation bubble renders above the player sprite
+    playerRef.current.nearInteract = !!nearZone
+
     // Use E as interact key to avoid conflict with W (walk up)
     if (nearZone && (keysRef.current['e'] || keysRef.current['E'])) {
       if (!keysRef.current.__interactFired) {
