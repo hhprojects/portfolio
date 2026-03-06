@@ -21,8 +21,8 @@ const PALETTE = {
 
 const DOWN_1 = [
   '______A_____',  // ahoge
-  '___AAAAAAA__',  // hair top
-  '__AHHHHHHA__',  // hair sides
+  '___AALLAAA__',  // hair top (L=highlight)
+  '__AHHIHHHA__',  // hair sides + forehead highlight
   '__AEWHEWHA__',  // eyes top (E=pupil, W=highlight)
   '__AEEHEEHA__',  // eyes bottom
   '__ARHHHHRA__',  // blush
@@ -44,8 +44,8 @@ const DOWN_1 = [
 
 const DOWN_2 = [
   '______A_____',
-  '___AAAAAAA__',
-  '__AHHHHHHA__',
+  '___AALLAAA__',
+  '__AHHIHHHA__',
   '__AEWHEWHA__',
   '__AEEHEEHA__',
   '__ARHHHHRA__',
@@ -67,8 +67,8 @@ const DOWN_2 = [
 
 const UP_1 = [
   '______A_____',  // ahoge (visible from back)
-  '___AAAAAAA__',  // hair top
-  '__AAAAAAAA__',  // back of head
+  '___AALLAAA__',  // hair top (L=highlight)
+  '__AAALLAAA__',  // back of head (crown highlight)
   '__AAAAAAAA__',
   '__AAAAAAAA__',
   '__AAAAAAAA__',
@@ -90,8 +90,8 @@ const UP_1 = [
 
 const UP_2 = [
   '______A_____',
-  '___AAAAAAA__',
-  '__AAAAAAAA__',
+  '___AALLAAA__',
+  '__AAALLAAA__',
   '__AAAAAAAA__',
   '__AAAAAAAA__',
   '__AAAAAAAA__',
@@ -113,8 +113,8 @@ const UP_2 = [
 
 const LEFT_1 = [
   '_______A____',  // ahoge shifted right
-  '____AAAAAAA_',
-  '___AHHHHHHA_',
+  '____AALLAAA_',
+  '___AHHHIHHA_',
   '___AEWHHHHA_',  // one eye (E=pupil, W=highlight)
   '___AEEHHHHA_',  // eye bottom
   '___ARHHHHA__',  // blush
@@ -136,8 +136,8 @@ const LEFT_1 = [
 
 const LEFT_2 = [
   '_______A____',
-  '____AAAAAAA_',
-  '___AHHHHHHA_',
+  '____AALLAAA_',
+  '___AHHHIHHA_',
   '___AEWHHHHA_',
   '___AEEHHHHA_',
   '___ARHHHHA__',
@@ -159,8 +159,8 @@ const LEFT_2 = [
 
 const RIGHT_1 = [
   '____A_______',  // ahoge shifted left
-  '_AAAAAAA____',
-  '_AHHHHHHA___',
+  '_AALLAAA____',
+  '_AHHHIHHA___',
   '_AHHHHWEA___',  // eye on right (W=highlight, E=pupil)
   '_AHHHHEEA___',  // eye bottom
   '__AHHHHRA___',  // blush
@@ -182,8 +182,8 @@ const RIGHT_1 = [
 
 const RIGHT_2 = [
   '____A_______',
-  '_AAAAAAA____',
-  '_AHHHHHHA___',
+  '_AALLAAA____',
+  '_AHHHIHHA___',
   '_AHHHHWEA___',
   '_AHHHHEEA___',
   '__AHHHHRA___',
