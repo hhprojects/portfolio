@@ -88,6 +88,8 @@ function drawMonitorScreen(ctx, obj, camX, camY, alpha) {
 }
 
 function drawMonstera(ctx, obj, camX, camY, alpha) {
+  const prevLineWidth   = ctx.lineWidth
+  const prevStrokeStyle = ctx.strokeStyle
   const cx = Math.floor(obj.x + obj.w / 2 - camX)
   const cy = Math.floor(obj.y + obj.h     - camY)
   const leaves = [
@@ -121,9 +123,13 @@ function drawMonstera(ctx, obj, camX, camY, alpha) {
     ctx.stroke()
     ctx.globalAlpha = alpha
   }
+  ctx.lineWidth   = prevLineWidth
+  ctx.strokeStyle = prevStrokeStyle
 }
 
 function drawMugSteam(ctx, obj, camX, camY, alpha) {
+  const prevLineWidth   = ctx.lineWidth
+  const prevStrokeStyle = ctx.strokeStyle
   const sx = Math.floor(obj.x - camX)
   const sy = Math.floor(obj.y - camY)
   const t  = Date.now() / 800
@@ -141,6 +147,8 @@ function drawMugSteam(ctx, obj, camX, camY, alpha) {
     ctx.globalAlpha = 0.15 * alpha
     ctx.stroke()
   }
+  ctx.lineWidth   = prevLineWidth
+  ctx.strokeStyle = prevStrokeStyle
 }
 
 function drawLrBookshelf(ctx, obj, camX, camY, alpha) {
