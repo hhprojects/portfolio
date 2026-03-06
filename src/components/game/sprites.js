@@ -1,19 +1,22 @@
-export const SPRITE_SCALE = 4
-export const SPRITE_W     = 10
-export const SPRITE_H     = 14
-export const SPRITE_PX_W  = SPRITE_W * SPRITE_SCALE   // 40
-export const SPRITE_PX_H  = SPRITE_H * SPRITE_SCALE   // 56
+export const SPRITE_SCALE = 2
+export const SPRITE_W     = 12
+export const SPRITE_H     = 20
+export const SPRITE_PX_W  = SPRITE_W * SPRITE_SCALE   // 24
+export const SPRITE_PX_H  = SPRITE_H * SPRITE_SCALE   // 40
 
 const PALETTE = {
-  'H': '#F4C4A1',
-  'A': '#2C1810',
-  'E': '#1A0A10',
-  'B': '#4A90D9',
-  'D': '#2E6DA4',
-  'N': '#2C3E50',
-  'S': '#1A1A1A',
-  'W': '#FFFFFF',
-  'R': '#E8A090',
+  'H': '#F9D4A8',  // skin
+  'I': '#FFE8C0',  // skin highlight
+  'A': '#3D1F0F',  // hair dark
+  'L': '#7A5230',  // hair mid
+  'E': '#1A0A10',  // eyes
+  'W': '#FFFFFF',  // eye highlight
+  'R': '#F0A0A0',  // blush
+  'B': '#4FAAFF',  // shirt bright
+  'C': '#2A6FCC',  // shirt shadow
+  'D': '#1A4A8A',  // shirt dark / arm
+  'N': '#2C3E50',  // pants
+  'S': '#1A1A1A',  // shoes
 }
 
 const DOWN_1 = [
