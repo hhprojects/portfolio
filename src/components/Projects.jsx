@@ -135,7 +135,7 @@ function Projects() {
                             controls
                             muted
                             playsInline
-                            preload="metadata"
+                            preload="none"
                           />
                         ) : (
                           <img src={media} alt={`${currentProject.title} ${index + 1}`} />

@@ -17,13 +17,24 @@ function App() {
   const scrollPosRef = useRef(0)
 
   useEffect(() => {
-    if (document.readyState === 'complete') {
-      const t = setTimeout(() => setLoaded(true), 600)
-      return () => clearTimeout(t)
+    let settled = false
+    const finish = () => {
+      if (settled) return
+      settled = true
+      setTimeout(() => setLoaded(true), 600)
     }
-    const onLoad = () => setTimeout(() => setLoaded(true), 600)
-    window.addEventListener('load', onLoad)
-    return () => window.removeEventListener('load', onLoad)
+
+    if (document.readyState === 'complete') {
+      finish()
+      return
+    }
+
+    window.addEventListener('load', finish)
+    const fallback = setTimeout(finish, 4000)
+    return () => {
+      window.removeEventListener('load', finish)
+      clearTimeout(fallback)
+    }
   }, [])
 
   const handlePlay = () => {
