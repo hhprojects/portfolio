@@ -17,6 +17,11 @@ export default function GameMode({ onExit }) {
   const cameraRef   = useRef({ x: 0, y: 0 })
   const keysRef     = useRef({})
 
+  // Bug 1 fix: one-shot flag so quick E taps aren't missed between frames
+  const interactPressedRef  = useRef(false)
+  // Bug 3 fix: track last label to avoid calling setOverlayState every frame
+  const lastInteractLabelRef = useRef(null)
+
   const [transitionState, setTransitionState] = useState('entering')
   const [overlayState, setOverlayState]       = useState({ interactLabel: null, popup: null })
   const [currentRoomName, setCurrentRoomName] = useState('Living Room')
@@ -43,7 +48,11 @@ export default function GameMode({ onExit }) {
   }, [triggerExit])
 
   useEffect(() => {
-    const down = (e) => { keysRef.current[e.key] = true }
+    const down = (e) => {
+      keysRef.current[e.key] = true
+      // Bug 1 fix: capture E press as a one-shot flag
+      if (e.key === 'e' || e.key === 'E') interactPressedRef.current = true
+    }
     const up   = (e) => { keysRef.current[e.key] = false }
     window.addEventListener('keydown', down)
     window.addEventListener('keyup',   up)
@@ -105,17 +114,18 @@ export default function GameMode({ onExit }) {
     // Update nearInteract so the ! exclamation bubble renders above the player sprite
     playerRef.current.nearInteract = !!nearZone
 
-    // Use E as interact key to avoid conflict with W (walk up)
-    if (nearZone && (keysRef.current['e'] || keysRef.current['E'])) {
-      if (!keysRef.current.__interactFired) {
-        keysRef.current.__interactFired = true
-        setOverlayState(s => ({ ...s, popup: nearZone.action }))
-      }
-    } else {
-      keysRef.current.__interactFired = false
+    // Bug 1 fix: use event-driven one-shot flag instead of polling keysRef
+    if (nearZone && interactPressedRef.current) {
+      interactPressedRef.current = false
+      setOverlayState(s => ({ ...s, popup: nearZone.action }))
     }
 
-    setOverlayState(s => ({ ...s, interactLabel: nearZone ? `[E] ${nearZone.label}` : null }))
+    // Bug 3 fix: only call setOverlayState when the label actually changes
+    const newLabel = nearZone ? `[E] ${nearZone.label}` : null
+    if (newLabel !== lastInteractLabelRef.current) {
+      lastInteractLabelRef.current = newLabel
+      setOverlayState(s => ({ ...s, interactLabel: newLabel }))
+    }
 
     drawFrame(ctx, canvas, playerRef.current, cameraRef.current, ROOMS)
   })
