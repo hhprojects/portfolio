@@ -1,13 +1,5 @@
 import { drawHan, SPRITE_PX_H } from './sprites'
-import { ROOM_W, ROOM_H } from './rooms'
-
-const WALL_TOP    = 120
-const WALL_BOTTOM = 580
-const WALL_LEFT   = 20
-const WALL_RIGHT  = 620
-const DOOR_SIZE   = 80
-const DOOR_MID_X  = 320   // ROOM_W / 2
-const DOOR_MID_Y  = 470   // Math.floor(WALL_TOP + (WALL_BOTTOM - WALL_TOP) / 2)
+import { ROOM_W, ROOM_H, WALL_TOP, WALL_BOTTOM, WALL_LEFT, WALL_RIGHT, DOOR_SIZE, DOOR_MID_X, DOOR_MID_Y } from './rooms'
 
 function drawRoom(ctx, room, camX, camY) {
   const ox = room.col * ROOM_W
@@ -17,7 +9,7 @@ function drawRoom(ctx, room, camX, camY) {
 
   // Floor
   ctx.fillStyle = room.floorColor
-  ctx.fillRect(sx + WALL_LEFT, sy + WALL_TOP, ROOM_W - WALL_LEFT - (ROOM_W - WALL_RIGHT), WALL_BOTTOM - WALL_TOP)
+  ctx.fillRect(sx + WALL_LEFT, sy + WALL_TOP, WALL_RIGHT - WALL_LEFT, WALL_BOTTOM - WALL_TOP)
 
   // North wall band
   ctx.fillStyle = room.wallColor

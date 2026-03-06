@@ -3,13 +3,13 @@ export const ROOM_H  = 640
 export const WORLD_W = ROOM_W * 2
 export const WORLD_H = ROOM_H * 2
 
-const WALL_TOP    = 120
-const WALL_BOTTOM = 580
-const WALL_LEFT   = 20
-const WALL_RIGHT  = 620
-const DOOR_SIZE   = 80
-const DOOR_MID_X  = ROOM_W / 2
-const DOOR_MID_Y  = Math.floor(WALL_TOP + (WALL_BOTTOM - WALL_TOP) / 2)
+export const WALL_TOP    = 120
+export const WALL_BOTTOM = 580
+export const WALL_LEFT   = 20
+export const WALL_RIGHT  = 620
+export const DOOR_SIZE   = 80
+export const DOOR_MID_X  = ROOM_W / 2
+export const DOOR_MID_Y  = Math.floor(WALL_TOP + (WALL_BOTTOM - WALL_TOP) / 2)
 
 // doors: { top, bottom, left, right } — true means a door gap exists on that side
 function roomWalls(col, row, doors = {}) {
