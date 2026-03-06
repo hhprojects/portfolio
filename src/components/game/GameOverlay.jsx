@@ -1,9 +1,9 @@
 import React from 'react'
 import { GL_PROJECTS } from './rooms'
 
-const _glPopupAssets = import.meta.glob('../../../assets/projects/**/*.{jpg,jpeg,png}', { eager: true })
+const _glPopupAssets = import.meta.glob('../../assets/projects/**/*.{jpg,jpeg,png}', { eager: true })
 function glPopupImgUrl(imgPath) {
-  const key = `../../../assets/projects/${imgPath}`
+  const key = `../../assets/projects/${imgPath}`
   const mod = _glPopupAssets[key]
   return mod ? mod.default : ''
 }
