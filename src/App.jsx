@@ -56,8 +56,8 @@ function App() {
       <Hero onPlay={handlePlay} />
       <About />
       <Skills />
-      <Blog />
       <Projects />
+      <Blog />
       <Contact />
       <Footer />
       {gameMode && <GameMode onExit={handleExit} />}

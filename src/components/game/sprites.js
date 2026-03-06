@@ -1,4 +1,4 @@
-export const SPRITE_SCALE = 2
+export const SPRITE_SCALE = 3
 export const SPRITE_W     = 12
 export const SPRITE_H     = 20
 export const SPRITE_PX_W  = SPRITE_W * SPRITE_SCALE   // 24
@@ -67,12 +67,12 @@ const DOWN_2 = [
 
 const UP_1 = [
   '______A_____',  // ahoge (visible from back)
-  '___AALLAAA__',  // hair top (L=highlight)
-  '__AAALLAAA__',  // back of head (crown highlight)
-  '__AAAAAAAA__',
-  '__AAAAAAAA__',
-  '__AAAAAAAA__',
-  '____HHHH____',  // neck
+  '___AALLAA___',  // hair top (L=highlight)
+  '___AALLAA___',  // back of head (crown highlight)
+  '___AAAAAA___',
+  '___AAAAAA___',
+  '___AAAAAA___',
+  '___HHHHHH___',  // neck
   '___CBBBBC___',  // shirt shoulder
   '__CBBBBBBC__',
   '__CBBBBBBC__',
@@ -90,12 +90,12 @@ const UP_1 = [
 
 const UP_2 = [
   '______A_____',
-  '___AALLAAA__',
-  '__AAALLAAA__',
-  '__AAAAAAAA__',
-  '__AAAAAAAA__',
-  '__AAAAAAAA__',
-  '____HHHH____',
+  '___AALLAA___',
+  '___AALLAA___',
+  '___AAAAAA___',
+  '___AAAAAA___',
+  '___AAAAAA___',
+  '___HHHHHH___',
   '___CBBBBC___',
   '__CBBBBBBC__',
   '__CBBBBBBC__',
@@ -113,10 +113,10 @@ const UP_2 = [
 
 const LEFT_1 = [
   '_______A____',  // ahoge shifted right
-  '____AALLAAA_',
-  '___AHHHIHHA_',
-  '___AEWHHHHA_',  // one eye (E=pupil, W=highlight)
-  '___AEEHHHHA_',  // eye bottom
+  '____АALLAА__',
+  '___АHHHIHA__',
+  '___АEWHHHA__',  // one eye (E=pupil, W=highlight)
+  '___АEEHHHA__',  // eye bottom
   '___ARHHHHA__',  // blush
   '____HEHH____',  // chin + smile corner
   '___CBBBBC___',
@@ -136,10 +136,10 @@ const LEFT_1 = [
 
 const LEFT_2 = [
   '_______A____',
-  '____AALLAAA_',
-  '___AHHHIHHA_',
-  '___AEWHHHHA_',
-  '___AEEHHHHA_',
+  '____АALLAА__',
+  '___АHHHIHA__',
+  '___АEWHHHA__',
+  '___АEEHHHA__',
   '___ARHHHHA__',
   '____HEHH____',
   '___CBBBBC___',
@@ -159,10 +159,10 @@ const LEFT_2 = [
 
 const RIGHT_1 = [
   '____A_______',  // ahoge shifted left
-  '_AALLAAA____',
-  '_AHHHIHHA___',
-  '_AHHHHWEA___',  // eye on right (W=highlight, E=pupil)
-  '_AHHHHEEA___',  // eye bottom
+  '__АALLAА____',
+  '__АHHIHHA___',
+  '__AHHHHWEA__',  // eye on right (W=highlight, E=pupil)
+  '__AHHHHEEA__',  // eye bottom
   '__AHHHHRA___',  // blush
   '____HHEH____',  // chin + smile corner
   '___CBBBBC___',
@@ -182,10 +182,10 @@ const RIGHT_1 = [
 
 const RIGHT_2 = [
   '____A_______',
-  '_AALLAAA____',
-  '_AHHHIHHA___',
-  '_AHHHHWEA___',
-  '_AHHHHEEA___',
+  '__АALLAА____',
+  '__АHHIHHA___',
+  '__AHHHHWEA__',
+  '__AHHHHEEA__',
   '__AHHHHRA___',
   '____HHEH____',
   '___CBBBBC___',

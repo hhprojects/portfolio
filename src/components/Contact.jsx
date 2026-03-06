@@ -74,7 +74,7 @@ function Contact() {
     <section id="contact" className="contact" ref={sectionRef}>
       <div className="contact-container">
         <div className="contact-header">
-          <span className="section-number">04</span>
+          <span className="section-number">05</span>
           <h2 className="contact-heading">Get In Touch</h2>
         </div>
         <p className="contact-subtitle">

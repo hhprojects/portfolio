@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './Blog.css'
 import { usePosts } from '../hooks/usePosts'
 import BlogPost from './BlogPost'
@@ -6,20 +6,42 @@ import BlogPost from './BlogPost'
 function Blog() {
   const posts = usePosts()
   const [activePost, setActivePost] = useState(null)
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in')
+          } else {
+            entry.target.classList.remove('animate-in')
+          }
+        })
+      },
+      { threshold: 0.2 }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <section id="blog" className="blog">
+    <section id="blog" className="blog" ref={sectionRef}>
       <div className="blog-container">
         <div className="blog-header">
-          <h2 className="blog-title">Blog</h2>
-          <span className="blog-title-accent" />
-          <p className="blog-subtitle">Thoughts on code, design, and whatever else.</p>
+          <span className="section-number">04</span>
+          <h2 className="blog-heading">Blog</h2>
         </div>
+        <p className="blog-subtitle">Thoughts on code, design, and whatever else.</p>
 
         {posts.length === 0 ? (
           <div className="blog-empty">
-            <span className="blog-empty-icon">✍️</span>
-            <p>Posts coming soon — check back later.</p>
+            <div className="blog-empty-icon">✍️</div>
+            <p className="blog-empty-text">Posts coming soon — check back later.</p>
           </div>
         ) : (
           <div className="blog-grid">
@@ -32,7 +54,7 @@ function Blog() {
                 tabIndex={0}
                 onKeyDown={(e) => e.key === 'Enter' && setActivePost(post)}
               >
-                <p className="blog-card-date">{post.date}</p>
+                <span className="blog-card-date">{post.date}</span>
                 <h3 className="blog-card-title">{post.title}</h3>
                 {post.summary && (
                   <p className="blog-card-summary">{post.summary}</p>

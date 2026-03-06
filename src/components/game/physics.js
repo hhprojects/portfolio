@@ -1,4 +1,4 @@
-const PLAYER_SPEED    = 150
+const PLAYER_SPEED    = 200
 const PLAYER_HW       = 10
 const PLAYER_HH       = 6
 const WALK_ANIM_SPEED = 8
