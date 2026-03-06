@@ -1,4 +1,12 @@
 import React from 'react'
+import { GL_PROJECTS } from './rooms'
+
+const _glPopupAssets = import.meta.glob('../../../assets/projects/**/*.{jpg,jpeg,png}', { eager: true })
+function glPopupImgUrl(imgPath) {
+  const key = `../../../assets/projects/${imgPath}`
+  const mod = _glPopupAssets[key]
+  return mod ? mod.default : ''
+}
 
 export default function GameOverlay({ overlayState, onDismiss }) {
   const { interactLabel, popup } = overlayState
@@ -80,27 +88,13 @@ function PopupContent({ action }) {
     case 'project2':
     case 'project3':
     case 'project4': {
-      const idx = parseInt(action.replace('project', '')) - 1
-      const projects = [
-        { title: 'Xuan Dashboard', desc: 'Personal AI assistant dashboard with real-time task management, calendar, and habit tracking.', tech: ['React', 'FastAPI', 'PostgreSQL', 'WebSockets'], color: '#667EEA' },
-        { title: 'Portfolio', desc: 'This portfolio! Built with React + Vite, featuring smooth animations and this game mode.', tech: ['React', 'Vite', 'CSS', 'Canvas API'], color: '#F093FB' },
-        { title: 'Project Three', desc: 'Description coming soon.', tech: ['TypeScript', 'Node.js', 'Docker'], color: '#4ECDC4' },
-        { title: 'Project Four', desc: 'Description coming soon.', tech: ['Python', 'FastAPI', 'Redis'], color: '#FF6B6B' },
-      ]
-      const p = projects[idx]
+      const p = GL_PROJECTS.find(proj => proj.action === action)
+      if (!p) return <div className="popup-body"><p>Project not found.</p></div>
       return (
         <div className="popup-body">
-          <div className="popup-project-color" style={{ background: p.color }} />
+          <img className="popup-project-img" src={glPopupImgUrl(p.imgPath)} alt={p.title} />
           <h2 className="popup-title">{p.title}</h2>
-          <div className="popup-section"><p>{p.desc}</p></div>
-          <div className="popup-tags">
-            {p.tech.map(t => <span key={t} className="popup-tag">{t}</span>)}
-          </div>
-          <div className="popup-links">
-            <a href="#projects" className="popup-link-btn" onClick={(e) => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }) }}>
-              View in Portfolio ↗
-            </a>
-          </div>
+          <div className="popup-section"><p>{p.description}</p></div>
         </div>
       )
     }
