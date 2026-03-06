@@ -103,14 +103,7 @@ function Hero({ onPlay }) {
             >
               Get In Touch
             </button>
-            <a
-              className="cta-button ghost"
-              href="/portfolio/resume.pdf"
-              download="Han_Hua_Resume.pdf"
-            >
-              📄 Resume
-            </a>
-            <button className="cta-button play-btn" onClick={onPlay}>
+<button className="cta-button play-btn" onClick={onPlay}>
               🎮 Play
             </button>
           </div>

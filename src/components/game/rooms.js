@@ -158,7 +158,7 @@ const GL_DOORS = { top: true, right: true }
 const GL_COLS        = 4
 const GL_FRAME_W     = 110
 const GL_FRAME_H     = 75
-const GL_H_STEP      = 130   // frame width + gap
+const GL_H_STEP      = 150   // frame width + gap (40px equal spacing: left / between / right)
 const GL_V_STEP      = 107   // frame + placard gap + placard + row gap
 const GL_FIRST_X     = 40
 const GL_FIRST_Y     = 148
@@ -264,30 +264,28 @@ const CT_OBJS   = [
   box('ct-newspaper-1',     200, 380,  55,  38, '#E8E0C8', { floor: true }),
   box('ct-newspaper-2',     315, 425,  48,  34, '#DDD4B8', { floor: true }),
   box('ct-newspaper-3',     420, 355,  52,  36, '#E4DCC4', { floor: true }),
-  // Employee floor band (purely visual, drawn as floor)
-  box('ct-employee-floor',   20, 540, 600,  40, '#A07840', { floor: true }),
   // Full-width counter — invisible collision walls (top + face)
-  box('ct-counter-wall',     20, 470, 600,  10, '#3A2210', { blocking: true }),
-  box('ct-counter-block',    20, 494, 600,  46, '#3D1F0D', { blocking: true }),
+  box('ct-counter-wall',     20, 480, 600,  10, '#3A2210', { blocking: true }),
+  box('ct-counter-block',    20, 504, 600,  46, '#3D1F0D', { blocking: true }),
   // Counter top surface (lighter mahogany, visible from above)
-  box('ct-counter-top',      20, 470, 600,  24, '#6B3A1F'),
+  box('ct-counter-top',      20, 480, 600,  24, '#6B3A1F', { alwaysOnTop: true, topZ: 1 }),
   // Counter front face (dark mahogany, facing player)
-  box('ct-counter-face',     20, 494, 600,  46, '#3D1F0D'),
+  box('ct-counter-face',     20, 504, 600,  46, '#3D1F0D'),
   // Glass partition rising from back edge of counter (always on top of player)
-  box('ct-glass-panel',      20, 420, 600,  50, '#C8E8F4', { alwaysOnTop: true }),
+  box('ct-glass-panel',      20, 430, 600,  50, '#C8E8F4', { alwaysOnTop: true }),
   // Lamp halo (drawn before scene objects)
-  box('ct-lamp-halo',        68, 445,  46,  46, '#FFD080'),
+  box('ct-lamp-halo',        68, 455,  46,  46, '#FFD080', { alwaysOnTop: true, topZ: 2 }),
   // Brass desk lamp on counter surface
-  box('ct-lamp',             80, 455,  22,  18, '#C8A030'),
+  box('ct-lamp',             80, 465,  22,  18, '#C8A030', { alwaysOnTop: true, topZ: 2 }),
   // Rubber stamp on counter
-  box('ct-stamp',           200, 462,  28,  16, '#CC2020'),
+  box('ct-stamp',           200, 472,  28,  16, '#CC2020', { alwaysOnTop: true, topZ: 2 }),
   // Paper tray on counter
-  box('ct-tray',            320, 460,  55,  20, '#6B3A1F'),
+  box('ct-tray',            320, 470,  55,  20, '#6B3A1F', { alwaysOnTop: true, topZ: 2 }),
   // Service bell on counter
-  box('ct-bell',            480, 458,  20,  20, '#C8A030'),
+  box('ct-bell',            480, 468,  20,  20, '#C8A030', { alwaysOnTop: true, topZ: 2 }),
 ]
 const CT_ZONES  = [
-  { id: 'counter-interact', x: 20, y: 420, w: 600, h: 100, label: 'Contact Me', action: 'contact' },
+  { id: 'counter-interact', x: 20, y: 430, w: 600, h: 100, label: 'Contact Me', action: 'contact' },
 ]
 
 export const ROOMS = [
@@ -331,7 +329,10 @@ export const ROOMS = [
     name: 'Contact',
     bgColor: COLORS.CT_FLOOR, wallColor: COLORS.CT_WALL, floorColor: COLORS.CT_FLOOR,
     doors: CT_DOORS,
-    walls:        roomWalls(1, 1, CT_DOORS),
+    walls: [
+      ...roomWalls(1, 1, CT_DOORS),
+      { x: 660, y: 1120, w: 600, h: 100 },  // counter + face (local y=480–550)
+    ],
     objects:      offsetObjects(CT_OBJS,  1, 1),
     interactZones: CT_ZONES.map(z => ({ ...z, x: z.x + 1 * ROOM_W, y: z.y + 1 * ROOM_H })),
   },
