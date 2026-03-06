@@ -65,6 +65,25 @@ function box(id, x, y, w, h, color, opts = {}) {
 const COLORS = {
   LR_FLOOR: '#C4A882', LR_WALL: '#8B7355', LR_SOFA: '#6B4C3B', LR_SOFA_L: '#7D5A47',
   LR_TABLE: '#A0522D', LR_RUG: '#8B1A3A', LR_SHELF: '#5C3A1E', LR_LAMP: '#D4AA70',
+  LR_WALL2:        '#F2EFE9',
+  LR_FLOOR2:       '#E4E1DA',
+  LR_DESK:         '#FFFFFF',
+  LR_DESK_LEG:     '#C8C5BE',
+  LR_MONITOR:      '#1C1C1C',
+  LR_SCREEN:       '#0A1628',
+  LR_PC:           '#2A2A2A',
+  LR_LAMP_POLE:    '#B8B4AC',
+  LR_LAMP_SHADE:   '#F5EDD8',
+  LR_SHELF2:       '#F8F6F1',
+  LR_MUG:          '#1C1C1C',
+  LR_RUG2:         '#DEDBD4',
+  LR_POT:          '#C4673A',
+  LR_PLANT_DARK:   '#1E4D2B',
+  LR_PLANT_MID:    '#2D7A3F',
+  LR_SUCCULENT:    '#5A7A5F',
+  LR_BOOK1:        '#C4673A',
+  LR_BOOK2:        '#2C2C2C',
+  LR_BOOK3:        '#6B8F71',
   WS_FLOOR: '#8B8B8B', WS_WALL: '#696969', WS_BENCH: '#4A3728', WS_MONITOR: '#1A1A2E',
   WS_SCREEN: '#00FF88', WS_SHELF: '#6B4C3B', WS_STICKY: '#FFE066',
   GL_FLOOR: '#E8E0D0', GL_WALL: '#C8BDB0', GL_FRAME: '#2C1810', GL_MAT: '#F5F0E8', GL_PLACARD: '#D4C4A0',
@@ -73,22 +92,59 @@ const COLORS = {
 }
 
 // ── Living Room (col=0, row=0) — doors: right, bottom ─────────────────────
-const LR_DOORS  = { right: true, bottom: true }
-const LR_OBJS   = [
-  box('rug',       60, 270, 260, 160, COLORS.LR_RUG),
-  box('table',     100, 310, 110, 55, COLORS.LR_TABLE),
-  box('sofa',       60, 180, 190, 80, COLORS.LR_SOFA,   { blocking: true }),
-  box('sofa-l',     60, 180,  20, 80, COLORS.LR_SOFA_L),
-  box('sofa-r',    230, 180,  20, 80, COLORS.LR_SOFA_L),
-  box('shelf',     360, 135,  60, 110, COLORS.LR_SHELF,  { blocking: true }),
-  box('lamp-base', 520, 330,  14,  55, COLORS.LR_LAMP),
-  box('lamp-head', 507, 312,  40,  22, COLORS.LR_LAMP),
-  box('picture',   110, 138,  70,  55, '#8B7355'),
-  box('picture-i', 117, 145,  56,  41, '#D4A090'),
+const LR_DOORS = { right: true, bottom: true }
+const LR_OBJS  = [
+  // Rug (drawn first — lowest Y+H so sorts early)
+  box('lr-rug',           100, 350, 360, 155, COLORS.LR_RUG2),
+
+  // Lamp halo (special render — drawn as ambient circles)
+  box('lamp-halo',        488, 120,  52,  44, COLORS.LR_LAMP_SHADE),
+
+  // Bookshelf (left wall)
+  box('lr-bookshelf',      26, 138,  55, 170, COLORS.LR_SHELF2,  { blocking: true }),
+  box('lr-book1',          32, 155,  10,  65, COLORS.LR_BOOK1),
+  box('lr-book2',          44, 165,  10,  55, COLORS.LR_BOOK2),
+  box('lr-book3',          56, 160,  10,  60, COLORS.LR_BOOK3),
+
+  // Desk
+  box('lr-desk',          130, 160, 340,  40, COLORS.LR_DESK,    { blocking: true }),
+  box('lr-desk-leg-l',    138, 200,   8,  70, COLORS.LR_DESK_LEG),
+  box('lr-desk-leg-r',    454, 200,   8,  70, COLORS.LR_DESK_LEG),
+
+  // Monitors (special render for screens)
+  box('lr-monitor-1',     170, 108,  90,  58, COLORS.LR_MONITOR, { blocking: true }),
+  box('monitor-screen-1', 174, 112,  82,  50, COLORS.LR_SCREEN),
+  box('lr-stand-1',       205, 168,  20,   6, COLORS.LR_MONITOR),
+  box('lr-monitor-2',     275, 108,  90,  58, COLORS.LR_MONITOR, { blocking: true }),
+  box('monitor-screen-2', 279, 112,  82,  50, COLORS.LR_SCREEN),
+  box('lr-stand-2',       310, 168,  20,   6, COLORS.LR_MONITOR),
+
+  // PC tower (under desk, right side)
+  box('lr-pc',            415, 188,  36,  85, COLORS.LR_PC,      { blocking: true }),
+  box('lr-pc-light',      418, 195,   4,   4, '#00FF88'),
+
+  // Coffee mug + steam
+  box('lr-mug',           368, 150,  22,  18, COLORS.LR_MUG),
+  box('lr-mug-rim',       366, 148,  26,   6, '#333333'),
+  box('mug-steam',        371, 126,  16,  22, '#FFFFFF'),
+
+  // Succulent on desk
+  box('lr-succ-pot',      402, 152,  18,  16, COLORS.LR_POT),
+  box('lr-succ-plant',    400, 140,  22,  14, COLORS.LR_SUCCULENT),
+
+  // Floor lamp
+  box('lr-lamp-pole',     512, 158,   8, 192, COLORS.LR_LAMP_POLE),
+  box('lr-lamp-shade',    490, 138,  48,  28, COLORS.LR_LAMP_SHADE),
+
+  // Monstera (special render for leaves)
+  box('monstera-pot',     536, 462,  58,  58, COLORS.LR_POT,     { blocking: true }),
+  box('monstera-pot-rim', 532, 460,  66,  12, '#D4774A'),
+  box('monstera-soil',    540, 462,  50,  12, '#1A0A00'),
+  box('monstera-leaves',  524, 280,  80, 182, COLORS.LR_PLANT_DARK),
 ]
-const LR_ZONES  = [
-  { id: 'bookshelf-interact', x: 330, y: 125, w: 100, h: 130, label: 'About Me',  action: 'about'   },
-  { id: 'picture-interact',   x:  95, y: 130, w: 110, h:  95, label: 'Fun Fact',  action: 'funfact' },
+const LR_ZONES = [
+  { id: 'bookshelf-interact', x:  20, y: 130, w:  68, h: 185, label: 'About Me', action: 'about'   },
+  { id: 'monitor-interact',   x: 160, y: 100, w: 215, h: 115, label: 'Fun Fact', action: 'funfact' },
 ]
 
 // ── Workshop (col=1, row=0) — doors: left, bottom ─────────────────────────
@@ -171,10 +227,18 @@ export const ROOMS = [
   {
     id: 0, col: 0, row: 0,
     name: 'Living Room',
-    bgColor: COLORS.LR_FLOOR, wallColor: COLORS.LR_WALL, floorColor: COLORS.LR_FLOOR,
+    bgColor:    COLORS.LR_FLOOR2,
+    wallColor:  COLORS.LR_WALL2,
+    floorColor: COLORS.LR_FLOOR2,
     doors: LR_DOORS,
-    walls:        roomWalls(0, 0, LR_DOORS),
-    objects:      offsetObjects(LR_OBJS,  0, 0),
+    walls: [
+      ...roomWalls(0, 0, LR_DOORS),
+      { x: 130, y: 160, w: 340, h: 40 },   // desk
+      { x:  26, y: 138, w:  55, h: 170 },  // bookshelf
+      { x: 536, y: 462, w:  58, h:  58 },  // monstera pot
+      { x: 510, y: 155, w:  10, h:  60 },  // lamp base
+    ],
+    objects:       offsetObjects(LR_OBJS, 0, 0),
     interactZones: LR_ZONES.map(z => ({ ...z, x: z.x + 0 * ROOM_W, y: z.y + 0 * ROOM_H })),
   },
   {
