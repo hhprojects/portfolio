@@ -5,7 +5,7 @@ const WALK_ANIM_SPEED = 8
 
 export function createPlayerState() {
   return {
-    x:            80,
+    x:            100,
     y:            380,
     dir:          'down',
     isMoving:     false,
@@ -66,7 +66,7 @@ export function updatePlayer(player, keys, rooms, dt, worldW, worldH) {
   if (!collidesWithAny(hitboxY, walls)) player.y = newY
 
   player.x = Math.max(PLAYER_HW, Math.min(worldW - PLAYER_HW, player.x))
-  player.y = Math.max(PLAYER_HH + 140, Math.min(worldH - PLAYER_HH - 46, player.y))
+  player.y = Math.max(PLAYER_HH, Math.min(worldH - PLAYER_HH, player.y))
 }
 
 function aabbOverlap(a, b) {
