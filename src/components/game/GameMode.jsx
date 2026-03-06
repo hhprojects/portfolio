@@ -57,8 +57,11 @@ export default function GameMode({ onExit }) {
     const resize = () => {
       const canvas = canvasRef.current
       if (!canvas) return
-      canvas.width  = window.innerWidth
-      canvas.height = window.innerHeight
+      // Scale canvas logical size so the 600px-tall world fills the viewport height.
+      // CSS stretches the canvas to 100% width/height (image-rendering: pixelated).
+      const scale = window.innerHeight / WORLD_HEIGHT
+      canvas.width  = Math.round(window.innerWidth / scale)
+      canvas.height = WORLD_HEIGHT
     }
     resize()
     window.addEventListener('resize', resize)
