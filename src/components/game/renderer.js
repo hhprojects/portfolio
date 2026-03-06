@@ -1,26 +1,68 @@
 import { drawHan, SPRITE_PX_H } from './sprites'
+import { ROOM_W, ROOM_H } from './rooms'
 
-const NORTH_WALL_H = 140
-const SOUTH_WALL_Y = 554
+const WALL_TOP    = 120
+const WALL_BOTTOM = 580
+const WALL_LEFT   = 20
+const WALL_RIGHT  = 620
+const DOOR_SIZE   = 80
+const DOOR_MID_X  = 320   // ROOM_W / 2
+const DOOR_MID_Y  = 470   // Math.floor(WALL_TOP + (WALL_BOTTOM - WALL_TOP) / 2)
 
-function drawRoom(ctx, room, camX, camY, cw, ch) {
+function drawRoom(ctx, room, camX, camY) {
+  const ox = room.col * ROOM_W
+  const oy = room.row * ROOM_H
+  const sx = Math.floor(ox - camX)
+  const sy = Math.floor(oy - camY)
+
+  // Floor
   ctx.fillStyle = room.floorColor
-  ctx.fillRect(Math.floor(room.id * 800 - camX), Math.floor(NORTH_WALL_H - camY), 800, SOUTH_WALL_Y - NORTH_WALL_H)
+  ctx.fillRect(sx + WALL_LEFT, sy + WALL_TOP, ROOM_W - WALL_LEFT - (ROOM_W - WALL_RIGHT), WALL_BOTTOM - WALL_TOP)
 
+  // North wall band
   ctx.fillStyle = room.wallColor
-  ctx.fillRect(Math.floor(room.id * 800 - camX), Math.floor(-camY), 800, NORTH_WALL_H)
+  ctx.fillRect(sx, sy, ROOM_W, WALL_TOP)
 
+  // South wall band (darker)
   ctx.fillStyle = darken(room.wallColor, 0.6)
-  ctx.fillRect(Math.floor(room.id * 800 - camX), Math.floor(SOUTH_WALL_Y - camY), 800, 600 - SOUTH_WALL_Y)
+  ctx.fillRect(sx, sy + WALL_BOTTOM, ROOM_W, ROOM_H - WALL_BOTTOM)
 
-  if (room.id < 3) {
-    const doorX = Math.floor((room.id + 1) * 800 - camX)
-    ctx.fillStyle = room.floorColor
-    ctx.fillRect(doorX - 20, Math.floor(-camY), 20, NORTH_WALL_H)
+  // West wall strip
+  ctx.fillStyle = darken(room.wallColor, 0.85)
+  ctx.fillRect(sx, sy, WALL_LEFT, ROOM_H)
+
+  // East wall strip
+  ctx.fillRect(sx + WALL_RIGHT, sy, ROOM_W - WALL_RIGHT, ROOM_H)
+
+  // Shadow line at bottom of north wall (skip if top door present)
+  if (!room.doors?.top) {
+    ctx.fillStyle = darken(room.wallColor, 0.8)
+    ctx.fillRect(sx, sy + WALL_TOP - 4, ROOM_W, 4)
   }
 
-  ctx.fillStyle = darken(room.wallColor, 0.8)
-  ctx.fillRect(Math.floor(room.id * 800 - camX), Math.floor(NORTH_WALL_H - 4 - camY), 800, 4)
+  // Door openings — paint floor/wall color over wall bands to reveal passage
+  const doors = room.doors || {}
+
+  if (doors.top) {
+    // Reveal gap in north wall
+    ctx.fillStyle = room.floorColor
+    ctx.fillRect(sx + DOOR_MID_X - DOOR_SIZE / 2, sy, DOOR_SIZE, WALL_TOP)
+  }
+  if (doors.bottom) {
+    // Reveal gap in south wall
+    ctx.fillStyle = room.floorColor
+    ctx.fillRect(sx + DOOR_MID_X - DOOR_SIZE / 2, sy + WALL_BOTTOM, DOOR_SIZE, ROOM_H - WALL_BOTTOM)
+  }
+  if (doors.left) {
+    // Reveal gap in west wall strip
+    ctx.fillStyle = room.floorColor
+    ctx.fillRect(sx, sy + DOOR_MID_Y - DOOR_SIZE / 2, WALL_LEFT, DOOR_SIZE)
+  }
+  if (doors.right) {
+    // Reveal gap in east wall strip
+    ctx.fillStyle = room.floorColor
+    ctx.fillRect(sx + WALL_RIGHT, sy + DOOR_MID_Y - DOOR_SIZE / 2, ROOM_W - WALL_RIGHT, DOOR_SIZE)
+  }
 }
 
 function drawObject(ctx, obj, camX, camY, alpha = 1) {
@@ -63,26 +105,33 @@ function drawObject(ctx, obj, camX, camY, alpha = 1) {
 export function drawFrame(ctx, canvas, player, camera, rooms) {
   const { x: camX, y: camY } = camera
   const { width: cw, height: ch } = canvas
-  const visLeft  = camX
-  const visRight = camX + cw
 
   ctx.fillStyle = '#000'
   ctx.fillRect(0, 0, cw, ch)
 
   for (const room of rooms) {
-    const roomLeft  = room.id * 800
-    const roomRight = roomLeft + 800
-    if (roomRight < visLeft || roomLeft > visRight) continue
-    drawRoom(ctx, room, camX, camY, cw, ch)
+    const roomLeft   = room.col * ROOM_W
+    const roomTop    = room.row * ROOM_H
+    const roomRight  = roomLeft + ROOM_W
+    const roomBottom = roomTop  + ROOM_H
+    if (roomRight < camX || roomLeft > camX + cw) continue
+    if (roomBottom < camY || roomTop > camY + ch) continue
+    drawRoom(ctx, room, camX, camY)
   }
 
   const allObjects = []
   for (const room of rooms) {
-    const roomLeft  = room.id * 800
-    const roomRight = roomLeft + 800
-    if (roomRight < visLeft || roomLeft > visRight) continue
+    const roomLeft   = room.col * ROOM_W
+    const roomTop    = room.row * ROOM_H
+    const roomRight  = roomLeft + ROOM_W
+    const roomBottom = roomTop  + ROOM_H
+    if (roomRight < camX || roomLeft > camX + cw) continue
+    if (roomBottom < camY || roomTop > camY + ch) continue
     for (const obj of room.objects) {
-      if (obj.x + obj.w > visLeft && obj.x < visRight) allObjects.push(obj)
+      if (obj.x + obj.w > camX && obj.x < camX + cw &&
+          obj.y + obj.h > camY && obj.y < camY + ch) {
+        allObjects.push(obj)
+      }
     }
   }
 
@@ -105,7 +154,6 @@ export function drawFrame(ctx, canvas, player, camera, rooms) {
       (obj.x + obj.w) > player.x - 16
     )
 
-    // Smooth alpha fade using stored _alpha
     obj._alpha = obj._alpha ?? 1.0
     const targetAlpha = objOverlapsPlayer ? 0.4 : 1.0
     obj._alpha += (targetAlpha - obj._alpha) * 0.15
