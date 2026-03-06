@@ -185,7 +185,7 @@ export const GL_PROJECTS = [
   {
     imgPath: 'xuan-dashboard/home.jpg',
     action: 'project3',
-    label: 'Xuan Dashboard',
+    label: 'Openclaw',
     title: 'Openclaw Dashboard',
     description: 'A personal AI dashboard on a Raspberry Pi. Live activity feed, pixel-art AI team visualization, kanban board, calendar with cron jobs, reading list with KB ingestion, and analytics.',
   },
