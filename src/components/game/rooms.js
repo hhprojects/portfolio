@@ -65,8 +65,8 @@ function box(id, x, y, w, h, color, opts = {}) {
 const COLORS = {
   LR_FLOOR: '#C4A882', LR_WALL: '#8B7355', LR_SOFA: '#6B4C3B', LR_SOFA_L: '#7D5A47',
   LR_TABLE: '#A0522D', LR_RUG: '#8B1A3A', LR_SHELF: '#5C3A1E', LR_LAMP: '#D4AA70',
-  LR_WALL2:        '#1E1B2E',
-  LR_FLOOR2:       '#161328',
+  LR_WALL2:        '#30284C',
+  LR_FLOOR2:       '#131020',
   LR_DESK:         '#E8E4F0',
   LR_DESK_LEG:     '#5A5880',
   LR_MONITOR:      '#0A0814',
@@ -80,11 +80,10 @@ const COLORS = {
   LR_POT:          '#C4673A',
   LR_PLANT_DARK:   '#1E4D2B',
   LR_SUCCULENT:    '#5A7A5F',
-  WS_FLOOR: '#8B8B8B', WS_WALL: '#696969', WS_BENCH: '#4A3728', WS_MONITOR: '#1A1A2E',
+  WS_FLOOR: '#14121F', WS_WALL: '#1C1A2E', WS_BENCH: '#4A3728', WS_MONITOR: '#1A1A2E',
   WS_SCREEN: '#00FF88', WS_SHELF: '#6B4C3B', WS_STICKY: '#FFE066',
-  GL_FLOOR: '#E8E0D0', GL_WALL: '#C8BDB0', GL_FRAME: '#2C1810', GL_MAT: '#F5F0E8', GL_PLACARD: '#D4C4A0',
-  CT_FLOOR: '#B8C4CC', CT_WALL: '#8A9BA8', CT_DESK: '#5C3A1E', CT_COMPUTER: '#1A1A2E',
-  CT_MAILBOX: '#CC4444', CT_WINDOW: '#87CEEB',
+  GL_FLOOR: '#16141E', GL_WALL: '#0E0C14', GL_FRAME: '#8B7340', GL_MAT: '#0A0810', GL_PLACARD: '#1A1520',
+  CT_FLOOR: '#C8A870', CT_WALL: '#E2D4B0',
 }
 
 // ── Living Room (col=0, row=0) — doors: right, bottom ─────────────────────
@@ -103,26 +102,29 @@ const LR_OBJS  = [
   box('lr-lamp-shade',    157,  82,  28,  22, COLORS.LR_LAMP_SHADE),
 
   // Desk (right side of room)
-  box('lr-desk',          370, 165, 210,  16, COLORS.LR_DESK),
-  box('lr-desk-leg-l',    378, 181,   6,  50, COLORS.LR_DESK_LEG),
-  box('lr-desk-leg-r',    566, 181,   6,  50, COLORS.LR_DESK_LEG),
+  box('lr-desk',          370, 155, 210,  30, COLORS.LR_DESK, { displayH: 40 }),
+  box('lr-desk-leg-l',    378, 195,   6,  50, COLORS.LR_DESK_LEG),
+  box('lr-desk-leg-r',    566, 195,   6,  50, COLORS.LR_DESK_LEG),
 
   // Monitors (special render for screens)
-  box('lr-monitor-1',     390, 127,  52,  38, COLORS.LR_MONITOR, { blocking: true }),
-  box('monitor-screen-1', 394, 131,  44,  30, COLORS.LR_SCREEN),
-  box('lr-stand-1',       410, 161,  12,   6, COLORS.LR_MONITOR),
-  box('lr-monitor-2',     455, 127,  52,  38, COLORS.LR_MONITOR, { blocking: true }),
-  box('monitor-screen-2', 459, 131,  44,  30, COLORS.LR_SCREEN),
-  box('lr-stand-2',       475, 161,  12,   6, COLORS.LR_MONITOR),
+  box('lr-monitor-1',     390, 127,  52,  59, COLORS.LR_MONITOR, { blocking: true, displayH: 37 }),
+  box('monitor-screen-1', 394, 131,  44,  55, COLORS.LR_SCREEN,  { displayH: 10 }),
+  box('lr-stand-1',       410, 161,  12,  25, COLORS.LR_MONITOR, { displayH: 6 }),
+  box('lr-monitor-2',     455, 127,  52,  59, COLORS.LR_MONITOR, { blocking: true, displayH: 37 }),
+  box('monitor-screen-2', 459, 131,  44,  55, COLORS.LR_SCREEN,  { displayH: 10 }),
+  box('lr-stand-2',       475, 161,  12,  25, COLORS.LR_MONITOR, { displayH: 6 }),
+
+  // Keyboard (on desk, below monitors)
+  box('keyboard',         415, 167,  55,  21, '#333'),
 
   // Coffee mug + steam
-  box('lr-mug',           531, 154,  13,  12, COLORS.LR_MUG),
-  box('lr-mug-rim',       529, 150,  17,   5, '#333333'),
-  box('mug-steam',        533, 135,   9,  16, '#FFFFFF'),
+  box('lr-mug',           531, 154,  13,  42, COLORS.LR_MUG,        { displayH: 12 }),
+  box('lr-mug-rim',       529, 150,  17,  46, '#333333',             { displayH:  5 }),
+  box('mug-steam',        533, 135,   9,  61, '#FFFFFF',             { displayH: 16 }),
 
   // Succulent on desk
-  box('lr-succ-pot',      563, 152,  14,  14, COLORS.LR_POT),
-  box('lr-succ-plant',    561, 140,  18,  13, COLORS.LR_SUCCULENT),
+  box('lr-succ-pot',      563, 152,  14,  44, COLORS.LR_POT,        { displayH: 14 }),
+  box('lr-succ-plant',    561, 140,  18,  56, COLORS.LR_SUCCULENT,  { displayH: 13 }),
 
   // Monstera (special render for leaves)
   box('monstera-pot',     549, 483,  27,  21, COLORS.LR_POT),
@@ -138,78 +140,154 @@ const LR_ZONES = [
 // ── Workshop (col=1, row=0) — doors: left, bottom ─────────────────────────
 const WS_DOORS  = { left: true, bottom: true }
 const WS_OBJS   = [
-  box('bench',   40, 165, 360,  50, COLORS.WS_BENCH,   { blocking: true }),
-  box('monitor', 130, 138,  80,  60, COLORS.WS_MONITOR, { blocking: true }),
-  box('screen',  138, 144,  64,  48, COLORS.WS_SCREEN),
-  box('keyboard',155, 215,  60,  14, '#333'),
-  box('shelf',   480, 155,  80, 100, COLORS.WS_BENCH,   { blocking: true }),
-  box('toolbox', 360, 390,  70,  50, '#8B0000'),
-  box('toolbox-l',360,390,  70,  12, '#AA1111'),
-  box('sticky1',  52, 152,  28,  22, COLORS.WS_STICKY),
-  box('sticky2',  88, 147,  28,  22, '#FFC0CB'),
-  box('sticky3', 124, 154,  28,  22, '#90EE90'),
-  box('mat',     200, 340,  90,  55, '#555'),
+  box('ws-corkboard',  340,  12, 268,  96, '#5C4A2A'),
+  box('ws-hw-shelf',    18,  78, 246,  14, '#3A2E1A'),
+  box('ws-raspi',       40,  64,  38,  32, '#1A4A2A'),
+  box('ws-chip',        91,  73,  22,  22, '#1A1A1A'),
+  box('ws-gameboy',    125,  60,  24,  36, '#9090A0'),
+  box('ws-hw-led',      18, 114, 246,  38, '#FFD080'),
 ]
 const WS_ZONES  = [
-  { id: 'monitor-interact',  x: 100, y: 130, w: 150, h: 140, label: 'Skills',     action: 'skills'    },
-  { id: 'stickies-interact', x:  35, y: 140, w: 130, h:  95, label: 'Tech Stack', action: 'techstack' },
+  { id: 'corkboard-interact', x: 340, y:  12, w: 268, h: 145, label: 'Skills', action: 'skills' },
 ]
 
 // ── Gallery (col=0, row=1) — doors: top, right ────────────────────────────
-const GL_DOORS  = { top: true, right: true }
-const GL_OBJS   = [
-  box('frame1',      40, 148, 110, 75, COLORS.GL_FRAME),
-  box('frame1-mat',  44, 152, 102, 67, COLORS.GL_MAT),
-  box('frame1-img',  49, 157,  92, 57, '#667EEA'),
-  box('placard1',    55, 230,  75, 14, COLORS.GL_PLACARD),
-  box('frame2',     170, 148, 110, 75, COLORS.GL_FRAME),
-  box('frame2-mat', 174, 152, 102, 67, COLORS.GL_MAT),
-  box('frame2-img', 179, 157,  92, 57, '#F093FB'),
-  box('placard2',   185, 230,  75, 14, COLORS.GL_PLACARD),
-  box('frame3',     310, 148, 110, 75, COLORS.GL_FRAME),
-  box('frame3-mat', 314, 152, 102, 67, COLORS.GL_MAT),
-  box('frame3-img', 319, 157,  92, 57, '#4ECDC4'),
-  box('placard3',   325, 230,  75, 14, COLORS.GL_PLACARD),
-  box('frame4',     440, 148, 110, 75, COLORS.GL_FRAME),
-  box('frame4-mat', 444, 152, 102, 67, COLORS.GL_MAT),
-  box('frame4-img', 449, 157,  92, 57, '#FF6B6B'),
-  box('placard4',   455, 230,  75, 14, COLORS.GL_PLACARD),
-  box('bench1',     130, 420, 110,  38, '#A0896C'),
-  box('bench2',     370, 420, 110,  38, '#A0896C'),
+const GL_DOORS = { top: true, right: true }
+
+// Gallery layout constants
+const GL_COLS        = 4
+const GL_FRAME_W     = 110
+const GL_FRAME_H     = 75
+const GL_H_STEP      = 130   // frame width + gap
+const GL_V_STEP      = 107   // frame + placard gap + placard + row gap
+const GL_FIRST_X     = 40
+const GL_FIRST_Y     = 148
+const GL_PLACARD_W   = 75
+const GL_PLACARD_H   = 14
+const GL_PLACARD_GAP = 8
+
+// ── Single source of truth: add a project here to show it in the gallery ──
+export const GL_PROJECTS = [
+  {
+    imgPath: 'muse/dark_board.jpg',
+    action: 'project1',
+    label: 'Muse',
+    title: 'Muse \u2013 Workflow Dashboard',
+    description: 'A full-stack dashboard for workflow management with containerized backend and frontend services. Features task tracking, calendar, and event management.',
+  },
+  {
+    imgPath: 'youtube_music_streamer/player.jpg',
+    action: 'project2',
+    label: 'YT Music',
+    title: 'YouTube Music Streamer',
+    description: 'A cross-platform mobile app to search YouTube, download audio, and manage a personal music library with a full-featured in-app player. Backend runs on a home server via Tailscale.',
+  },
+  {
+    imgPath: 'xuan-dashboard/home.jpg',
+    action: 'project3',
+    label: 'Xuan Dashboard',
+    title: 'Openclaw Dashboard',
+    description: 'A personal AI dashboard on a Raspberry Pi. Live activity feed, pixel-art AI team visualization, kanban board, calendar with cron jobs, reading list with KB ingestion, and analytics.',
+  },
+  {
+    imgPath: 'portfolio/portfolio.jpg',
+    action: 'project4',
+    label: 'Portfolio',
+    title: 'Portfolio Website',
+    description: 'This portfolio \u2014 built with React and Vite. Smooth animations, responsive design, and this 2.5D canvas game mode.',
+  },
 ]
-const GL_ZONES  = [
-  { id: 'frame1-interact', x:  28, y: 140, w: 132, h: 114, label: 'Project 1', action: 'project1' },
-  { id: 'frame2-interact', x: 158, y: 140, w: 132, h: 114, label: 'Project 2', action: 'project2' },
-  { id: 'frame3-interact', x: 298, y: 140, w: 132, h: 114, label: 'Project 3', action: 'project3' },
-  { id: 'frame4-interact', x: 428, y: 140, w: 132, h: 114, label: 'Project 4', action: 'project4' },
+
+function buildGalleryObjects(projects) {
+  const objs = []
+
+  // Column spotlights — one per column, height covers all rows in that column
+  for (let col = 0; col < Math.min(projects.length, GL_COLS); col++) {
+    let lastRow = 0
+    for (let i = col; i < projects.length; i += GL_COLS) lastRow = Math.floor(i / GL_COLS)
+    const spotH = GL_FIRST_Y + lastRow * GL_V_STEP
+    objs.push(box(`gl-spot-col-${col}`, GL_FIRST_X + col * GL_H_STEP, 0, GL_FRAME_W, spotH, '#000'))
+  }
+
+  // Frames, mats, images, placards
+  for (let i = 0; i < projects.length; i++) {
+    const col = i % GL_COLS
+    const row = Math.floor(i / GL_COLS)
+    const fx  = GL_FIRST_X + col * GL_H_STEP
+    const fy  = GL_FIRST_Y + row * GL_V_STEP
+    const px  = fx + Math.floor((GL_FRAME_W - GL_PLACARD_W) / 2)
+    const py  = fy + GL_FRAME_H + GL_PLACARD_GAP
+    objs.push(box(`gl-frame-${i}`,     fx,     fy,     GL_FRAME_W,      GL_FRAME_H,      COLORS.GL_FRAME))
+    objs.push(box(`gl-frame-mat-${i}`, fx + 4, fy + 4, GL_FRAME_W - 8,  GL_FRAME_H - 8,  COLORS.GL_MAT))
+    objs.push(box(`gl-frame-img-${i}`, fx + 9, fy + 9, GL_FRAME_W - 18, GL_FRAME_H - 18, '#000'))
+    objs.push(box(`gl-placard-${i}`,   px,     py,     GL_PLACARD_W,    GL_PLACARD_H,    COLORS.GL_PLACARD))
+  }
+
+  return objs
+}
+
+function buildGalleryZones(projects) {
+  return projects.map((p, i) => {
+    const col = i % GL_COLS
+    const row = Math.floor(i / GL_COLS)
+    const fx  = GL_FIRST_X + col * GL_H_STEP
+    const fy  = GL_FIRST_Y + row * GL_V_STEP
+    return {
+      id:    `gl-frame-zone-${i}`,
+      x:     fx - 12,
+      y:     fy - 8,
+      w:     GL_FRAME_W + 22,
+      h:     GL_FRAME_H + GL_PLACARD_GAP + GL_PLACARD_H + 18,
+      label: p.label,
+      action: p.action,
+    }
+  })
+}
+
+const GL_OBJS  = [
+  ...buildGalleryObjects(GL_PROJECTS),
+  box('gl-bench-1', 130, 420, 110, 38, '#1E1A2E'),
+  box('gl-bench-2', 370, 420, 110, 38, '#1E1A2E'),
 ]
+const GL_ZONES = buildGalleryZones(GL_PROJECTS)
 
 // ── Contact (col=1, row=1) — doors: top, left ─────────────────────────────
 const CT_DOORS  = { top: true, left: true }
 const CT_OBJS   = [
-  box('window',    300, 140, 150, 100, COLORS.CT_WINDOW),
-  box('window-f',  304, 144, 142,  92, '#D0EFFF'),
-  box('win-hbar',  304, 188, 142,   4, '#8A9BA8'),
-  box('win-vbar',  374, 144,   4,  92, '#8A9BA8'),
-  box('desk',      100, 165, 190,  50, COLORS.CT_DESK,     { blocking: true }),
-  box('desk-leg1', 110, 215,  12,  70, COLORS.CT_DESK),
-  box('desk-leg2', 270, 215,  12,  70, COLORS.CT_DESK),
-  box('computer',  155, 130,  80,  60, COLORS.CT_COMPUTER, { blocking: true }),
-  box('comp-screen',163,136,  64,  48, '#00AAFF'),
-  box('comp-base', 182, 215,  36,  10, '#333'),
-  box('mailbox',   496, 255,  56,  28, COLORS.CT_MAILBOX,  { blocking: true }),
-  box('mailbox-lid',496,245,  56,  14, '#AA2222'),
-  box('mailbox-slot',510,257, 28,   6, '#1A0000'),
-  box('mailbox-stand',514,283, 24,  80, '#555'),
-  box('chair-seat',160, 250,  58,  48, '#4A3728'),
-  box('chair-back',160, 210,  58,  48, '#4A3728',          { blocking: true }),
-  box('plant-pot',     535, 408,  26,  22, '#C4673A'),
-  box('plant-pot-rim', 531, 402,  34,   9, '#D4774A'),
-  box('plant',         529, 368,  36,  34, '#2D6B3A'),
+  // Warm afternoon window (right wall)
+  box('ct-window',          480,  30, 120,  90, '#F5D870'),
+  // Bulletin board (left wall)
+  box('ct-bulletin',         30,  28,  80,  62, '#5A3A1A'),
+  // Classic red British post box — customer side
+  box('ct-postbox',         530, 290,  52,  95, '#CC1A1A', { blocking: true }),
+  // Scattered newspapers on customer floor
+  box('ct-newspaper-1',     200, 380,  55,  38, '#E8E0C8', { floor: true }),
+  box('ct-newspaper-2',     315, 425,  48,  34, '#DDD4B8', { floor: true }),
+  box('ct-newspaper-3',     420, 355,  52,  36, '#E4DCC4', { floor: true }),
+  // Employee floor band (purely visual, drawn as floor)
+  box('ct-employee-floor',   20, 540, 600,  40, '#A07840', { floor: true }),
+  // Full-width counter — invisible collision walls (top + face)
+  box('ct-counter-wall',     20, 470, 600,  10, '#3A2210', { blocking: true }),
+  box('ct-counter-block',    20, 494, 600,  46, '#3D1F0D', { blocking: true }),
+  // Counter top surface (lighter mahogany, visible from above)
+  box('ct-counter-top',      20, 470, 600,  24, '#6B3A1F'),
+  // Counter front face (dark mahogany, facing player)
+  box('ct-counter-face',     20, 494, 600,  46, '#3D1F0D'),
+  // Glass partition rising from back edge of counter (always on top of player)
+  box('ct-glass-panel',      20, 420, 600,  50, '#C8E8F4', { alwaysOnTop: true }),
+  // Lamp halo (drawn before scene objects)
+  box('ct-lamp-halo',        68, 445,  46,  46, '#FFD080'),
+  // Brass desk lamp on counter surface
+  box('ct-lamp',             80, 455,  22,  18, '#C8A030'),
+  // Rubber stamp on counter
+  box('ct-stamp',           200, 462,  28,  16, '#CC2020'),
+  // Paper tray on counter
+  box('ct-tray',            320, 460,  55,  20, '#6B3A1F'),
+  // Service bell on counter
+  box('ct-bell',            480, 458,  20,  20, '#C8A030'),
 ]
 const CT_ZONES  = [
-  { id: 'computer-interact', x: 115, y: 120, w: 160, h: 155, label: 'Contact Me', action: 'contact' },
-  { id: 'mailbox-interact',  x: 468, y: 235, w: 115, h: 155, label: 'Send Mail',  action: 'contact' },
+  { id: 'counter-interact', x: 20, y: 420, w: 600, h: 100, label: 'Contact Me', action: 'contact' },
 ]
 
 export const ROOMS = [
