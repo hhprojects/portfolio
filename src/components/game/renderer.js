@@ -57,11 +57,149 @@ function drawRoom(ctx, room, camX, camY) {
   }
 }
 
+function drawLampHalo(ctx, obj, camX, camY, alpha) {
+  const cx = Math.floor(obj.x + obj.w / 2 - camX)
+  const cy = Math.floor(obj.y + obj.h / 2 - camY)
+  const radii  = [90, 65, 40]
+  const alphas = [0.02, 0.04, 0.06]
+  for (let i = 0; i < radii.length; i++) {
+    ctx.beginPath()
+    ctx.arc(cx, cy, radii[i], 0, Math.PI * 2)
+    ctx.fillStyle = '#FFD580'
+    ctx.globalAlpha = alphas[i] * alpha
+    ctx.fill()
+  }
+}
+
+function drawMonitorScreen(ctx, obj, camX, camY, alpha) {
+  const sx = Math.floor(obj.x - camX)
+  const sy = Math.floor(obj.y - camY)
+  ctx.globalAlpha = alpha
+  ctx.fillStyle = '#0A1628'
+  ctx.fillRect(sx, sy, obj.w, obj.h)
+  ctx.fillStyle = '#1E3A5F'
+  ctx.fillRect(sx + 4, sy + 4, Math.floor(obj.w * 0.65), Math.floor(obj.h * 0.55))
+  const glows = [{ pad: 1, a: 0.08 }, { pad: 2, a: 0.05 }, { pad: 3, a: 0.02 }]
+  for (const g of glows) {
+    ctx.globalAlpha = g.a * alpha
+    ctx.fillStyle = '#4A8FE0'
+    ctx.fillRect(sx - g.pad, sy - g.pad, obj.w + g.pad * 2, obj.h + g.pad * 2)
+  }
+}
+
+function drawMonstera(ctx, obj, camX, camY, alpha) {
+  const cx = Math.floor(obj.x + obj.w / 2 - camX)
+  const cy = Math.floor(obj.y + obj.h     - camY)
+  const leaves = [
+    { angle: -0.9, len: 95,  width: 30, color: '#1E4D2B' },
+    { angle: -0.4, len: 115, width: 34, color: '#2D7A3F' },
+    { angle:  0.0, len: 105, width: 32, color: '#1E4D2B' },
+    { angle:  0.4, len: 100, width: 28, color: '#2D7A3F' },
+    { angle:  0.9, len:  85, width: 24, color: '#1E4D2B' },
+  ]
+  ctx.globalAlpha = alpha
+  for (const leaf of leaves) {
+    const rad  = leaf.angle - Math.PI / 2
+    const tipX = cx + Math.cos(rad) * leaf.len
+    const tipY = cy + Math.sin(rad) * leaf.len
+    const midX = cx + Math.cos(rad) * leaf.len * 0.5
+    const midY = cy + Math.sin(rad) * leaf.len * 0.5
+    const px   = Math.cos(leaf.angle) * leaf.width / 2
+    const py   = Math.sin(leaf.angle) * leaf.width / 2
+    ctx.beginPath()
+    ctx.moveTo(cx, cy)
+    ctx.quadraticCurveTo(midX - px, midY - py, tipX, tipY)
+    ctx.quadraticCurveTo(midX + px, midY + py, cx, cy)
+    ctx.fillStyle = leaf.color
+    ctx.fill()
+    ctx.beginPath()
+    ctx.moveTo(cx, cy)
+    ctx.lineTo(tipX, tipY)
+    ctx.strokeStyle = '#3A9455'
+    ctx.lineWidth = 1
+    ctx.globalAlpha = 0.4 * alpha
+    ctx.stroke()
+    ctx.globalAlpha = alpha
+  }
+}
+
+function drawMugSteam(ctx, obj, camX, camY, alpha) {
+  const sx = Math.floor(obj.x - camX)
+  const sy = Math.floor(obj.y - camY)
+  const t  = Date.now() / 800
+  ctx.strokeStyle = '#FFFFFF'
+  ctx.lineWidth = 1.5
+  for (let i = 0; i < 2; i++) {
+    const xOff = Math.sin(t + i * 1.2) * 3
+    ctx.beginPath()
+    ctx.moveTo(sx + i * 7 + 2, sy + obj.h)
+    ctx.bezierCurveTo(
+      sx + i * 7 + 2 + xOff,       sy + obj.h * 0.6,
+      sx + i * 7 + 2 - xOff,       sy + obj.h * 0.3,
+      sx + i * 7 + 2 + xOff * 0.5, sy
+    )
+    ctx.globalAlpha = 0.15 * alpha
+    ctx.stroke()
+  }
+}
+
+function drawLrBookshelf(ctx, obj, camX, camY, alpha) {
+  const sx = Math.floor(obj.x - camX)
+  const sy = Math.floor(obj.y - camY)
+  // Shelf back panel
+  ctx.globalAlpha = alpha
+  ctx.fillStyle = '#F8F6F1'
+  ctx.fillRect(sx, sy, obj.w, obj.h)
+  // Two shelf dividers
+  ctx.fillStyle = '#E0DDD6'
+  ctx.fillRect(sx, sy, obj.w, 3)
+  ctx.fillRect(sx, sy + Math.floor(obj.h / 2), obj.w, 3)
+  // A few sparse books (minimalist — only 3, lots of negative space)
+  const books = [
+    { x: 6,  h: 55, color: '#C4673A' },
+    { x: 18, h: 45, color: '#2C2C2C' },
+    { x: 30, h: 50, color: '#6B8F71' },
+  ]
+  for (const b of books) {
+    ctx.fillStyle = b.color
+    ctx.fillRect(sx + b.x, sy + 8, 9, b.h)
+    // Book top highlight
+    ctx.fillStyle = lighten(b.color, 1.25)
+    ctx.fillRect(sx + b.x, sy + 8, 9, 3)
+  }
+}
+
 function drawObject(ctx, obj, camX, camY, alpha = 1) {
   const sx = Math.floor(obj.x - camX)
   const sy = Math.floor(obj.y - camY)
   const prevAlpha = ctx.globalAlpha
   ctx.globalAlpha = alpha
+
+  if (obj.id === 'lamp-halo') {
+    drawLampHalo(ctx, obj, camX, camY, alpha)
+    ctx.globalAlpha = prevAlpha
+    return
+  }
+  if (obj.id === 'monitor-screen-1' || obj.id === 'monitor-screen-2') {
+    drawMonitorScreen(ctx, obj, camX, camY, alpha)
+    ctx.globalAlpha = prevAlpha
+    return
+  }
+  if (obj.id === 'monstera-leaves') {
+    drawMonstera(ctx, obj, camX, camY, alpha)
+    ctx.globalAlpha = prevAlpha
+    return
+  }
+  if (obj.id === 'mug-steam') {
+    drawMugSteam(ctx, obj, camX, camY, alpha)
+    ctx.globalAlpha = prevAlpha
+    return
+  }
+  if (obj.id === 'lr-bookshelf') {
+    drawLrBookshelf(ctx, obj, camX, camY, alpha)
+    ctx.globalAlpha = prevAlpha
+    return
+  }
 
   ctx.fillStyle = obj.color
   ctx.fillRect(sx, sy, obj.w, obj.h)
