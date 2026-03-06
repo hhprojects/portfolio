@@ -33,6 +33,18 @@ export default function GameOverlay({ overlayState, onDismiss }) {
 }
 
 function PopupContent({ action }) {
+  if (action && action.startsWith('project')) {
+    const p = GL_PROJECTS.find(proj => proj.action === action)
+    if (!p) return <div className="popup-body"><p>Project not found.</p></div>
+    return (
+      <div className="popup-body">
+        <img className="popup-project-img" src={glPopupImgUrl(p.imgPath)} alt={p.title} />
+        <h2 className="popup-title">{p.title}</h2>
+        <div className="popup-section"><p>{p.description}</p></div>
+      </div>
+    )
+  }
+
   switch (action) {
     case 'about':
       return (
@@ -83,21 +95,6 @@ function PopupContent({ action }) {
           </div>
         </div>
       )
-
-    case 'project1':
-    case 'project2':
-    case 'project3':
-    case 'project4': {
-      const p = GL_PROJECTS.find(proj => proj.action === action)
-      if (!p) return <div className="popup-body"><p>Project not found.</p></div>
-      return (
-        <div className="popup-body">
-          <img className="popup-project-img" src={glPopupImgUrl(p.imgPath)} alt={p.title} />
-          <h2 className="popup-title">{p.title}</h2>
-          <div className="popup-section"><p>{p.description}</p></div>
-        </div>
-      )
-    }
 
     case 'contact':
       return (
