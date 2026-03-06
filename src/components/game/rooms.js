@@ -79,11 +79,7 @@ const COLORS = {
   LR_RUG2:         '#DEDBD4',
   LR_POT:          '#C4673A',
   LR_PLANT_DARK:   '#1E4D2B',
-  LR_PLANT_MID:    '#2D7A3F',
   LR_SUCCULENT:    '#5A7A5F',
-  LR_BOOK1:        '#C4673A',
-  LR_BOOK2:        '#2C2C2C',
-  LR_BOOK3:        '#6B8F71',
   WS_FLOOR: '#8B8B8B', WS_WALL: '#696969', WS_BENCH: '#4A3728', WS_MONITOR: '#1A1A2E',
   WS_SCREEN: '#00FF88', WS_SHELF: '#6B4C3B', WS_STICKY: '#FFE066',
   GL_FLOOR: '#E8E0D0', GL_WALL: '#C8BDB0', GL_FRAME: '#2C1810', GL_MAT: '#F5F0E8', GL_PLACARD: '#D4C4A0',
@@ -94,7 +90,7 @@ const COLORS = {
 // ── Living Room (col=0, row=0) — doors: right, bottom ─────────────────────
 const LR_DOORS = { right: true, bottom: true }
 const LR_OBJS  = [
-  // Rug (drawn first — lowest Y+H so sorts early)
+  // Rug (floor decoration, south of furniture so draws after it)
   box('lr-rug',           100, 350, 360, 155, COLORS.LR_RUG2),
 
   // Lamp halo (special render — drawn as ambient circles)
@@ -102,10 +98,6 @@ const LR_OBJS  = [
 
   // Bookshelf (left wall)
   box('lr-bookshelf',      26, 138,  55, 170, COLORS.LR_SHELF2,  { blocking: true }),
-  box('lr-book1',          32, 155,  10,  65, COLORS.LR_BOOK1),
-  box('lr-book2',          44, 165,  10,  55, COLORS.LR_BOOK2),
-  box('lr-book3',          56, 160,  10,  60, COLORS.LR_BOOK3),
-
   // Desk
   box('lr-desk',          130, 160, 340,  40, COLORS.LR_DESK,    { blocking: true }),
   box('lr-desk-leg-l',    138, 200,   8,  70, COLORS.LR_DESK_LEG),
@@ -234,6 +226,7 @@ export const ROOMS = [
     walls: [
       ...roomWalls(0, 0, LR_DOORS),
       { x: 130, y: 160, w: 340, h: 40 },   // desk
+      { x: 415, y: 200, w:  36, h: 73 },   // pc tower (below desk)
       { x:  26, y: 138, w:  55, h: 170 },  // bookshelf
       { x: 536, y: 462, w:  58, h:  58 },  // monstera pot
       { x: 510, y: 155, w:  10, h:  60 },  // lamp base
