@@ -66,37 +66,49 @@ const DOWN_2 = [
 ]
 
 const UP_1 = [
-  '__AAAAAA__',
-  '_AAAAAAA__',
-  '_AAAAAAA__',
-  '_AHHHHHA__',
-  '__HHHHHH__',
-  '_BBBBBBBB_',
-  '_BBBBBBBB_',
-  '_BDBBBDBB_',
-  '_BBBBBBBB_',
-  '__NN__NN__',
-  '__NN__NN__',
-  '__NN__NN__',
-  '__NN__NN__',
-  '_SSS__SSS_',
+  '______A_____',  // ahoge (visible from back)
+  '___AAAAAAA__',  // hair top
+  '__AAAAAAAA__',  // back of head
+  '__AAAAAAAA__',
+  '__AAAAAAAA__',
+  '__AAAAAAAA__',
+  '____HHHH____',  // neck
+  '___CBBBBC___',  // shirt shoulder
+  '__CBBBBBBC__',
+  '__CBBBBBBC__',
+  '__CBDBDBBC__',
+  '__CBBBBBBC__',
+  '__CBBBBBBC__',
+  '___NNNNNN___',  // waist
+  '___NN__NN___',  // legs
+  '___NN__NN___',
+  '___NN__NN___',
+  '___NN__NN___',
+  '___SS__SS___',  // shoes
+  '__SSS__SSS__',
 ]
 
 const UP_2 = [
-  '__AAAAAA__',
-  '_AAAAAAA__',
-  '_AAAAAAA__',
-  '_AHHHHHA__',
-  '__HHHHHH__',
-  '_BBBBBBBB_',
-  '_BBBBBBBB_',
-  '_BDBBBDBB_',
-  '_BBBBBBBB_',
-  '___N___N__',
-  '___N___N__',
-  '__NN___NN_',
-  '__NN___NN_',
-  '__SS___SS_',
+  '______A_____',
+  '___AAAAAAA__',
+  '__AAAAAAAA__',
+  '__AAAAAAAA__',
+  '__AAAAAAAA__',
+  '__AAAAAAAA__',
+  '____HHHH____',
+  '___CBBBBC___',
+  '__CBBBBBBC__',
+  '__CBBBBBBC__',
+  '__CBDBDBBC__',
+  '__CBBBBBBC__',
+  '__CBBBBBBC__',
+  '___NNNNNN___',
+  '__NN____NN__',  // legs spread
+  '__NN____NN__',
+  '__NN____NN__',
+  '__NN____NN__',
+  '__SS____SS__',
+  '_SSS____SSS_',
 ]
 
 const LEFT_1 = [
