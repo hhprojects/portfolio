@@ -20,37 +20,49 @@ const PALETTE = {
 }
 
 const DOWN_1 = [
-  '__AAAAAA__',
-  '_AHHHHHHA_',
-  '_AHEHHEHA_',
-  '_AHHRRHHA_',
-  '__HHHHHH__',
-  '_BBBBBBBB_',
-  '_BBBBBBBB_',
-  '_BDBBBDBB_',
-  '_BBBBBBBB_',
-  '__NN__NN__',
-  '__NN__NN__',
-  '__NN__NN__',
-  '__NN__NN__',
-  '_SSS__SSS_',
+  '______A_____',  // ahoge
+  '___AAAAAAA__',  // hair top
+  '__AHHHHHHA__',  // hair sides
+  '__AEWHEWHA__',  // eyes top (E=pupil, W=highlight)
+  '__AEEHEEHA__',  // eyes bottom
+  '__ARHHHHRA__',  // blush
+  '___HEHHEH___',  // chin + smile corners
+  '___CBBBBC___',  // shoulder (narrow = rounded)
+  '__CBBBBBBC__',  // shirt body
+  '__CBBBBBBC__',
+  '__CBDBDBBC__',  // shirt detail
+  '__CBBBBBBC__',
+  '__CBBBBBBC__',
+  '___NNNNNN___',  // waist
+  '___NN__NN___',  // legs together
+  '___NN__NN___',
+  '___NN__NN___',
+  '___NN__NN___',
+  '___SS__SS___',  // shoes
+  '__SSS__SSS__',
 ]
 
 const DOWN_2 = [
-  '__AAAAAA__',
-  '_AHHHHHHA_',
-  '_AHEHHEHA_',
-  '_AHHRRHHA_',
-  '__HHHHHH__',
-  '_BBBBBBBB_',
-  '_BBBBBBBB_',
-  '_BDBBBDBB_',
-  '_BBBBBBBB_',
-  '___N___N__',
-  '___N___N__',
-  '__NN___NN_',
-  '__NN___NN_',
-  '__SS___SS_',
+  '______A_____',
+  '___AAAAAAA__',
+  '__AHHHHHHA__',
+  '__AEWHEWHA__',
+  '__AEEHEEHA__',
+  '__ARHHHHRA__',
+  '___HEHHEH___',
+  '___CBBBBC___',
+  '__CBBBBBBC__',
+  '__CBBBBBBC__',
+  '__CBDBDBBC__',
+  '__CBBBBBBC__',
+  '__CBBBBBBC__',
+  '___NNNNNN___',
+  '__NN____NN__',  // legs spread
+  '__NN____NN__',
+  '__NN____NN__',
+  '__NN____NN__',
+  '__SS____SS__',
+  '_SSS____SSS_',
 ]
 
 const UP_1 = [
