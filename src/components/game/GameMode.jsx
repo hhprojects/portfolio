@@ -17,6 +17,11 @@ export default function GameMode({ onExit }) {
   const cameraRef   = useRef({ x: 0, y: 0 })
   const keysRef     = useRef({})
 
+  // Bug 1 fix: one-shot flag so quick E taps aren't missed between frames
+  const interactPressedRef  = useRef(false)
+  // Bug 3 fix: track last label to avoid calling setOverlayState every frame
+  const lastInteractLabelRef = useRef(null)
+
   const [transitionState, setTransitionState] = useState('entering')
   const [overlayState, setOverlayState]       = useState({ interactLabel: null, popup: null })
   const [currentRoomName, setCurrentRoomName] = useState('Living Room')
@@ -43,7 +48,11 @@ export default function GameMode({ onExit }) {
   }, [triggerExit])
 
   useEffect(() => {
-    const down = (e) => { keysRef.current[e.key] = true }
+    const down = (e) => {
+      keysRef.current[e.key] = true
+      // Bug 1 fix: capture E press as a one-shot flag
+      if (e.key === 'e' || e.key === 'E') interactPressedRef.current = true
+    }
     const up   = (e) => { keysRef.current[e.key] = false }
     window.addEventListener('keydown', down)
     window.addEventListener('keyup',   up)
@@ -57,8 +66,11 @@ export default function GameMode({ onExit }) {
     const resize = () => {
       const canvas = canvasRef.current
       if (!canvas) return
-      canvas.width  = window.innerWidth
-      canvas.height = window.innerHeight
+      // Scale canvas logical size so the 600px-tall world fills the viewport height.
+      // CSS stretches the canvas to 100% width/height (image-rendering: pixelated).
+      const scale = window.innerHeight / WORLD_HEIGHT
+      canvas.width  = Math.round(window.innerWidth / scale)
+      canvas.height = WORLD_HEIGHT
     }
     resize()
     window.addEventListener('resize', resize)
@@ -99,16 +111,21 @@ export default function GameMode({ onExit }) {
       }
     }
 
-    if (nearZone && (keysRef.current['w'] || keysRef.current['W'] || keysRef.current['ArrowUp'])) {
-      if (!keysRef.current.__interactFired) {
-        keysRef.current.__interactFired = true
-        setOverlayState(s => ({ ...s, popup: nearZone.action }))
-      }
-    } else {
-      keysRef.current.__interactFired = false
+    // Update nearInteract so the ! exclamation bubble renders above the player sprite
+    playerRef.current.nearInteract = !!nearZone
+
+    // Bug 1 fix: use event-driven one-shot flag instead of polling keysRef
+    if (nearZone && interactPressedRef.current) {
+      interactPressedRef.current = false
+      setOverlayState(s => ({ ...s, popup: nearZone.action }))
     }
 
-    setOverlayState(s => ({ ...s, interactLabel: nearZone ? `[W] ${nearZone.label}` : null }))
+    // Bug 3 fix: only call setOverlayState when the label actually changes
+    const newLabel = nearZone ? `[E] ${nearZone.label}` : null
+    if (newLabel !== lastInteractLabelRef.current) {
+      lastInteractLabelRef.current = newLabel
+      setOverlayState(s => ({ ...s, interactLabel: newLabel }))
+    }
 
     drawFrame(ctx, canvas, playerRef.current, cameraRef.current, ROOMS)
   })
@@ -120,7 +137,7 @@ export default function GameMode({ onExit }) {
       <canvas ref={canvasRef} />
       <div className="pixelate-overlay" />
       <div className="game-room-label">{currentRoomName}</div>
-      <div className="game-controls-hint">WASD / ↑↓←→ Move &nbsp;|&nbsp; W Interact &nbsp;|&nbsp; ESC Exit</div>
+      <div className="game-controls-hint">WASD / ↑↓←→ Move &nbsp;|&nbsp; E Interact &nbsp;|&nbsp; ESC Exit</div>
       <button className="game-exit-btn" onClick={triggerExit}>✕ ESC</button>
       <GameOverlay
         overlayState={overlayState}
